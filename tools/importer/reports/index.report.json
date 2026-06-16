@@ -1,0 +1,18 @@
+{
+  "status": "success",
+  "url": "https://www.stagwellglobal.com/",
+  "path": "index",
+  "timestamp": "2026-06-16T10:47:22.228Z",
+  "title": "Stagwell | Transforming Marketing",
+  "template": "homepage",
+  "blocks": [
+    "hero-intro",
+    "video-brand",
+    "columns-positioning",
+    "cards-feature",
+    "carousel-capabilities",
+    "cards-stats",
+    "cards-stats",
+    "form"
+  ]
+}

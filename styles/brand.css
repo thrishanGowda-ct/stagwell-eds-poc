@@ -1,0 +1,38 @@
+/* Brand design tokens extracted from https://www.stagwellglobal.com/ */
+:root {
+  /* Fonts */
+  --heading-font-family: "Montserrat", helvetica, arial, sans-serif;
+  --body-font-family: "Montserrat", helvetica, arial, sans-serif;
+  --display-font-family: "Spectral", georgia, "Times New Roman", serif;
+  --fixed-font-family: "Roboto Mono", menlo, consolas, "Liberation Mono", monospace;
+
+  /* Brand colors */
+  --background-color: #fff;
+  --text-color: #003349;
+  --link-color: #2ea3f2;
+  --link-hover-color: #009cbd;
+
+  /* Section palette */
+  --color-dark: #003349;
+  --color-grey: #f4f6f7;
+  --color-accent: #009cbd;
+  --color-accent-gold: #ffb81c;
+
+  /* Spacing */
+  --section-padding: 64px;
+  --content-max-width: 1248px;
+  --nav-height: 70px;
+
+  /* Heading sizes - desktop */
+  --heading-size-xxl: 56px;
+  --heading-size-xl: 40px;
+  --heading-size-l: 32px;
+  --heading-size-m: 24px;
+  --heading-size-s: 18px;
+  --heading-size-xs: 16px;
+
+  /* Body font sizes */
+  --body-font-size-m: 18px;
+  --body-font-size-s: 16px;
+  --body-font-size-xs: 14px;
+}

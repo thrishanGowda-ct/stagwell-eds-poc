@@ -1,0 +1,69 @@
+/* cards-feature: 3-column feature grid (image, uppercase heading, paragraph) */
+
+/* Values extracted from source computed styles (stagwellglobal.com). */
+
+.cards-feature > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.cards-feature > ul > li {
+  display: flex;
+  flex-direction: column;
+}
+
+/* image first, sized full-width with a landscape ratio matching source (258 x 149) */
+.cards-feature .cards-feature-card-image {
+  order: 0;
+  line-height: 0;
+  margin: 0 0 20px;
+}
+
+.cards-feature .cards-feature-card-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 346 / 200;
+  object-fit: cover;
+}
+
+/* body holds heading + paragraph */
+.cards-feature .cards-feature-card-body {
+  order: 1;
+}
+
+.cards-feature .cards-feature-card-body h3 {
+  margin: 0 0 30px;
+  padding: 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-m); /* 24px desktop */
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: 2px;
+  color: var(--text-color);
+}
+
+.cards-feature .cards-feature-card-body p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-color);
+}
+
+@media (width >= 900px) {
+  .cards-feature > ul {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 86px;
+  }
+
+  .cards-feature > ul > li {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}

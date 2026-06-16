@@ -1,0 +1,37 @@
+{
+  "variantName": "video-brand",
+  "baseBlock": "video",
+  "version": "1.0.0",
+  "created": "2026-06-16T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.stagwellglobal.com/",
+    "originPage": "Stagwell homepage",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "brand-video",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "poster image + self-hosted mp4 link",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "full-width brand/feature videos with a poster image",
+      "self-hosted mp4 or YouTube/Vimeo embeds with click-to-play"
+    ],
+    "notSuitableFor": [
+      "inline thumbnail videos within text",
+      "galleries of multiple videos (use carousel)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-06-16T00:00:00.000Z"
+  }
+}

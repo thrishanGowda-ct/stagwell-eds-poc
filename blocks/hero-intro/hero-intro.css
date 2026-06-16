@@ -1,0 +1,109 @@
+/* hero-intro -- page intro hero: extended logo + earnings webcast line + "Transforming Marketing" headline */
+
+/* Values extracted from https://www.stagwellglobal.com/ .et_pb_section_0 (desktop 1440px) */
+
+/* Full-width block: override section max-width/padding so the hero spans the row */
+.hero-intro-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.hero-intro {
+  padding: 10px 24px 0;
+  margin: 0 0 20px;
+  color: var(--text-color);
+}
+
+/* Rows (logo row, text row) -- stacked on mobile */
+.hero-intro > div {
+  margin: 0;
+}
+
+/* Cell wrappers carry the content */
+.hero-intro > div > div {
+  margin: 0;
+}
+
+/* Logo */
+.hero-intro picture {
+  display: block;
+}
+
+.hero-intro img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Webcast announcement line */
+.hero-intro p {
+  margin: 0 0 8px;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 25px;
+  color: var(--text-color);
+}
+
+/* "HERE" inline link */
+.hero-intro a:any-link {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.hero-intro a:any-link:hover {
+  color: var(--link-hover-color);
+}
+
+/* "Transforming / Marketing" headline (single h3 with <br>) */
+.hero-intro h3 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0.36px;
+  color: var(--text-color);
+}
+
+/* Second line "Marketing" rendered in display serif italic to match source */
+.hero-intro h3 .display-line {
+  display: block;
+  font-family: var(--display-font-family);
+  font-style: italic;
+  letter-spacing: -0.36px;
+}
+
+@media (width >= 900px) {
+  .hero-intro {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 10px 60px 0;
+  }
+
+  /* Logo row takes the larger left portion, text row the right */
+  .hero-intro > div:first-child {
+    flex: 0 1 57%;
+  }
+
+  .hero-intro > div:last-child {
+    flex: 0 1 43%;
+  }
+
+  .hero-intro h3 {
+    font-size: 48px;
+    line-height: 43.2px;
+    letter-spacing: 0.48px;
+  }
+
+  .hero-intro h3 .display-line {
+    letter-spacing: -0.48px;
+  }
+}
