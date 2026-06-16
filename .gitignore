@@ -12,3 +12,9 @@ helix-importer-ui
 !CLAUDE.md
 !AGENTS.md
 migration-work/navigation-validation/
+
+
+drafts/
+.playwright-mcp/
+
+

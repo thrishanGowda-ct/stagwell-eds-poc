@@ -1,5 +1,92 @@
-/* cards-stats: text-only stat grid (large Spectral number + small uppercase label) */
+/* cards-stats: stat grid with optional editorial intro panel */
 
+/* ══ SECTION-LEVEL LAYOUT ════════════════════════════════════════════════════
+   JS adds has-cards-stats-intro to the section when a .default-content-wrapper
+   sibling is present. This turns the section into a two-column grid.
+   ═══════════════════════════════════════════════════════════════════════════ */
+main .section.has-cards-stats-intro {
+  padding: 0;
+}
+
+main .section.has-cards-stats-intro > div {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+main .section.has-cards-stats-intro .default-content-wrapper {
+  background: var(--color-grey);
+  padding: 56px 24px;
+}
+
+main .section.has-cards-stats-intro .cards-stats-wrapper {
+  background: var(--background-color);
+}
+
+/* ══ INTRO CONTENT STYLES (CMS page: .default-content-wrapper) ══════════════ */
+main .section.has-cards-stats-intro .default-content-wrapper h2,
+main .section.has-cards-stats-intro .default-content-wrapper h3 {
+  margin: 0;
+  font-family: var(--display-font-family);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text-color);
+}
+
+main .section.has-cards-stats-intro .default-content-wrapper h2 + h2,
+main .section.has-cards-stats-intro .default-content-wrapper h3 + h3 {
+  margin-top: 0;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+main .section.has-cards-stats-intro .default-content-wrapper p {
+  margin: 20px 0 0;
+  font-size: var(--body-font-size-xs);
+  line-height: 1.65;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+main .section.has-cards-stats-intro .default-content-wrapper a:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--body-font-family);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+main .section.has-cards-stats-intro .default-content-wrapper a:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+/* ══ BLOCK-LEVEL: two-column layout (draft / test HTML only) ════════════════
+   Triggered when first block row contains h2/h3; JS creates .cards-stats-intro.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.cards-stats.has-intro {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-left: -24px;
+  margin-right: -24px;
+}
+
+.cards-stats-intro {
+  background: var(--color-grey);
+  padding: 56px 24px;
+}
+
+/* ══ STATS LIST ══════════════════════════════════════════════════════════════ */
 .cards-stats ul {
   list-style: none;
   margin: 24px 0 0;
@@ -9,11 +96,22 @@
   gap: 32px 48px;
 }
 
+.cards-stats.has-intro ul {
+  background: var(--background-color);
+  margin: 0;
+  padding: 56px 24px;
+}
+
+main .section.has-cards-stats-intro .cards-stats ul {
+  margin: 0;
+  padding: 56px 24px;
+}
+
 .cards-stats li {
   margin: 0;
 }
 
-/* NUMBER -- large Spectral light italic (extracted: Spectral 300 italic) */
+/* NUMBER — large Spectral light italic */
 .cards-stats h4 {
   margin: 0;
   font-family: var(--display-font-family);
@@ -23,22 +121,35 @@
   line-height: 0.94;
   letter-spacing: -0.04em;
   color: var(--text-color);
+  font-variant-numeric: tabular-nums;
 }
 
-/* LABEL -- small uppercase Montserrat bold, teal accent (extracted) */
+/* LABEL — small uppercase Montserrat bold, teal accent */
 .cards-stats h5 {
   margin: 8px 0 0;
   font-family: var(--body-font-family);
   font-weight: 700;
-  font-size: 11.2px;
+  font-size: 13px;
   line-height: 1;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--color-accent);
 }
 
-/* Dark section: teal numbers, near-white labels.
-   Override the global `.section.dark h4/h5 { color:#fff }` rules. */
+/* ══ ENTRANCE ANIMATION (progressive enhancement) ═══════════════════════════ */
+.cards-stats.has-animation li {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition-delay: var(--anim-delay, 0ms);
+}
+
+.cards-stats li.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ══ DARK SECTION OVERRIDES ══════════════════════════════════════════════════ */
 .section.dark .cards-stats h4 {
   color: var(--color-accent);
 }
@@ -47,8 +158,7 @@
   color: rgb(245 247 246);
 }
 
-/* Grey section: dark navy numbers, teal labels (defaults already match,
-   but make explicit in case the block appears outside a styled section). */
+/* ══ GREY SECTION OVERRIDES ══════════════════════════════════════════════════ */
 .section.grey .cards-stats h4 {
   color: var(--text-color);
 }
@@ -57,11 +167,40 @@
   color: var(--color-accent);
 }
 
-/* Desktop: 2x2 grid with a hairline divider between the two rows */
+/* ══ DESKTOP (≥ 900px) ═══════════════════════════════════════════════════════ */
 @media (width >= 900px) {
+  main .section.has-cards-stats-intro {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+  }
+
+  main .section.has-cards-stats-intro .default-content-wrapper {
+    padding: 80px 48px;
+    border-right: 1px solid rgb(0 51 73 / 12%);
+  }
+
   .cards-stats ul {
     grid-template-columns: repeat(2, 1fr);
     gap: 0 60px;
+  }
+
+  .cards-stats.has-intro {
+    grid-template-columns: 2fr 3fr;
+    margin-left: -32px;
+    margin-right: -32px;
+  }
+
+  .cards-stats-intro {
+    padding: 80px 48px;
+    border-right: 1px solid rgb(0 51 73 / 12%);
+  }
+
+  .cards-stats.has-intro ul {
+    padding: 80px 48px;
+  }
+
+  main .section.has-cards-stats-intro .cards-stats ul {
+    padding: 80px 48px;
   }
 
   /* hairline divider above the second row (items 3 and 4) */
