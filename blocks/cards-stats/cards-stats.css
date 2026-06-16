@@ -158,6 +158,42 @@ main .section.has-cards-stats-intro .cards-stats ul {
   color: rgb(245 247 246);
 }
 
+/* Dark + intro: clear per-column backgrounds so the dark section shows through */
+main .section.dark.has-cards-stats-intro .default-content-wrapper {
+  background: transparent;
+}
+
+main .section.dark.has-cards-stats-intro .cards-stats-wrapper {
+  background: transparent;
+}
+
+/* Heading colors in dark intro panel */
+main .section.dark.has-cards-stats-intro .default-content-wrapper h2,
+main .section.dark.has-cards-stats-intro .default-content-wrapper h3 {
+  color: #fff;
+}
+
+/* Italic brand heading (e.g. "Stagwell") → gold */
+main .section.dark.has-cards-stats-intro .default-content-wrapper h2 + h2,
+main .section.dark.has-cards-stats-intro .default-content-wrapper h3 + h3 {
+  color: var(--color-accent-gold);
+}
+
+/* Body copy → off-white; reset opacity override from light-mode rule */
+main .section.dark.has-cards-stats-intro .default-content-wrapper p {
+  color: rgb(255 255 255 / 80%);
+  opacity: 1;
+}
+
+/* CTA link → white */
+main .section.dark.has-cards-stats-intro .default-content-wrapper a:any-link {
+  color: #fff;
+}
+
+main .section.dark.has-cards-stats-intro .default-content-wrapper a:hover {
+  color: var(--color-accent);
+}
+
 /* ══ GREY SECTION OVERRIDES ══════════════════════════════════════════════════ */
 .section.grey .cards-stats h4 {
   color: var(--text-color);
@@ -177,6 +213,10 @@ main .section.has-cards-stats-intro .cards-stats ul {
   main .section.has-cards-stats-intro .default-content-wrapper {
     padding: 80px 48px;
     border-right: 1px solid rgb(0 51 73 / 12%);
+  }
+
+  main .section.dark.has-cards-stats-intro .default-content-wrapper {
+    border-right-color: rgb(255 255 255 / 15%);
   }
 
   .cards-stats ul {
