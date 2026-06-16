@@ -1,0 +1,37 @@
+{
+  "variantName": "columns-positioning",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-06-16T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.stagwellglobal.com/",
+    "originPage": "Stagwell homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "positioning-statement",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "3 text columns: heading + heading + paragraph with CTA",
+    "buttonCount": 1,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "side-by-side text positioning statements",
+      "multi-column informational layouts"
+    ],
+    "notSuitableFor": [
+      "repeating image cards (use cards)",
+      "single-column content"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-06-16T00:00:00.000Z"
+  }
+}

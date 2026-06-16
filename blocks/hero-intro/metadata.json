@@ -1,0 +1,37 @@
+{
+  "variantName": "hero-intro",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-06-16T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.stagwellglobal.com/",
+    "originPage": "Stagwell homepage",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "homepage-hero",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "logo + announcement link + 2-line headline",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "homepage intros with a large headline",
+      "text-led hero with brand logo and announcement"
+    ],
+    "notSuitableFor": [
+      "full-bleed background-image heroes",
+      "heroes with a single primary CTA button"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-06-16T00:00:00.000Z"
+  }
+}

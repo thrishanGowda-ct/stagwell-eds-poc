@@ -10,7 +10,33 @@ import {
   loadSections,
   loadCSS,
   buildBlock,
+  readBlockConfig,
+  toClassName,
 } from './aem.js';
+
+/**
+ * Reads `section-metadata` tables and applies the configured styles as classes
+ * on the parent section, then removes the metadata block. This project's
+ * aem.js decorateSections does not handle section metadata, so we process it
+ * here before decorateSections runs (otherwise it is treated as a block).
+ * @param {Element} main The container element
+ */
+function decorateSectionMetadata(main) {
+  main.querySelectorAll(':scope > div > div.section-metadata').forEach((metaBlock) => {
+    const section = metaBlock.parentElement;
+    const meta = readBlockConfig(metaBlock);
+    Object.keys(meta).forEach((key) => {
+      if (key === 'style') {
+        meta.style.split(',').map((s) => toClassName(s.trim())).filter((s) => s).forEach((s) => {
+          section.classList.add(s);
+        });
+      } else {
+        section.dataset[toClassName(key)] = meta[key];
+      }
+    });
+    metaBlock.remove();
+  });
+}
 
 /**
  * load fonts.css and set a session storage flag
@@ -125,6 +151,7 @@ function decorateButtons(main) {
 export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
+  decorateSectionMetadata(main);
   decorateSections(main);
   decorateBlocks(main);
   decorateButtons(main);
