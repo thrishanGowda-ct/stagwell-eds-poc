@@ -1,0 +1,131 @@
+/*
+ * video-brand
+ * Full-width self-hosted brand video with poster image and play control overlay.
+ * Source: .et_pb_section_1 .et_pb_video on stagwellglobal.com
+ * Poster: 16/9 cover image; play control: blue circle outline + blue triangle.
+ */
+
+/* Let the block span the wide contained width from the source (row max-width 1560px,
+   60px side padding). EDS caps .section > div at 1200px, so widen the wrapper.
+   Match the global "main > .section > div" specificity to override it. */
+main > .section > .video-brand-wrapper {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (width >= 900px) {
+  main > .section > .video-brand-wrapper {
+    padding: 0 60px;
+  }
+}
+
+.video-brand {
+  margin: 0;
+  max-width: none;
+  text-align: center;
+}
+
+/* Reserve 16/9 space before the video embed loads to avoid layout shift */
+.video-brand[data-embed-loaded='false']:not(.placeholder) {
+  aspect-ratio: 16 / 9;
+}
+
+.video-brand > div {
+  display: block;
+}
+
+.video-brand video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Poster placeholder fills a 16/9 box; poster image covers it */
+.video-brand .video-brand-placeholder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+}
+
+.video-brand .video-brand-placeholder > * {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-brand .video-brand-placeholder picture {
+  display: block;
+}
+
+.video-brand .video-brand-placeholder picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hide poster once the video has loaded */
+.video-brand[data-embed-loaded='true'] .video-brand-placeholder,
+.video-brand[data-embed-loaded='false'] .video-brand-placeholder + * {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+/* Play control: blue circle outline with blue triangle (matches source) */
+.video-brand .video-brand-placeholder-play button {
+  position: relative;
+  display: block;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  outline: 2px solid var(--link-color);
+  outline-offset: 0;
+  cursor: pointer;
+  transition: outline-color 0.2s ease, transform 0.2s ease;
+}
+
+.video-brand .video-brand-placeholder-play button::before {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 3px);
+  width: 0;
+  height: 0;
+  border-top: 13px solid transparent;
+  border-bottom: 13px solid transparent;
+  border-left: 20px solid var(--link-color);
+  transform: translate(-50%, -50%);
+}
+
+.video-brand .video-brand-placeholder-play button:hover {
+  outline-color: var(--link-hover-color);
+  transform: scale(1.08);
+}
+
+.video-brand .video-brand-placeholder-play button:hover::before {
+  border-left-color: var(--link-hover-color);
+}
+
+@media (width >= 900px) {
+  .video-brand .video-brand-placeholder-play button {
+    width: 84px;
+    height: 84px;
+  }
+
+  .video-brand .video-brand-placeholder-play button::before {
+    border-top-width: 17px;
+    border-bottom-width: 17px;
+    border-left-width: 26px;
+  }
+}

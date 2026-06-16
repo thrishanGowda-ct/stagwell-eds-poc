@@ -1,0 +1,37 @@
+{
+  "variantName": "cards-stats",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-06-16T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.stagwellglobal.com/",
+    "originPage": "Stagwell homepage",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "grey",
+    "density": "compact",
+    "purpose": "stats",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "4 text-only items: large number/value + uppercase label",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "statistic / KPI grids with a big number and a short label",
+      "text-only metric callout blocks (no images)"
+    ],
+    "notSuitableFor": [
+      "cards that include images (use cards-feature)",
+      "long-form descriptive content"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/index"],
+    "reuseCount": 2,
+    "lastUsed": "2026-06-16T00:00:00.000Z"
+  }
+}
