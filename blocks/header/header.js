@@ -104,6 +104,16 @@ export default async function decorate(block) {
     }
   }
 
+  // unwrap <p> wrappers around top-level links so the `li > a` CSS selectors
+  // (navy, uppercase, bold) and the dropdown trigger detection both match
+  if (navSections) {
+    navSections.querySelectorAll(':scope > li > p').forEach((p) => {
+      if (p.children.length === 1 && p.firstElementChild.tagName === 'A') {
+        p.replaceWith(p.firstElementChild);
+      }
+    });
+  }
+
   // backdrop overlay
   const overlay = document.createElement('div');
   overlay.className = 'nav-overlay';
