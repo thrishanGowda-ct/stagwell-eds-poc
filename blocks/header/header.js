@@ -55,15 +55,22 @@ function toggleMenu(nav, navSections, overlay, forceExpanded = null) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // load nav as fragment
+  // load nav as fragment — try the configured/local path, then the published root path
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/content/nav';
-  const fragment = await loadFragment(navPath);
+  const candidatePaths = navMeta
+    ? [new URL(navMeta, window.location).pathname]
+    : ['/content/nav', '/nav'];
+  let fragment = null;
+  for (let i = 0; i < candidatePaths.length && !fragment; i += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    fragment = await loadFragment(candidatePaths[i]);
+  }
 
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
+  if (!fragment) return;
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -95,6 +102,16 @@ export default async function decorate(block) {
       sectionsWrapper.replaceWith(topUl);
       navSections = topUl;
     }
+  }
+
+  // unwrap <p> wrappers around top-level links so the `li > a` CSS selectors
+  // (navy, uppercase, bold) and the dropdown trigger detection both match
+  if (navSections) {
+    navSections.querySelectorAll(':scope > li > p').forEach((p) => {
+      if (p.children.length === 1 && p.firstElementChild.tagName === 'A') {
+        p.replaceWith(p.firstElementChild);
+      }
+    });
   }
 
   // backdrop overlay
