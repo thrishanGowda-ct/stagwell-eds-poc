@@ -133,6 +133,11 @@ header nav .nav-sections > li > ul > li > a {
   text-decoration: none;
 }
 
+/* dropdown-panel logo — hidden on mobile, shown bottom-left on desktop */
+header nav .nav-megamenu-logo {
+  display: none;
+}
+
 /* white overlay behind open megamenu (scrim below the nav bar; visual only) */
 header .nav-overlay {
   position: fixed;
@@ -172,7 +177,7 @@ header .nav-overlay.is-visible {
   header nav .nav-brand {
     position: absolute;
     top: 0;
-    right: 24px;
+    right: 90px;
     height: var(--nav-height, 70px);
     display: flex;
     align-items: center;
@@ -188,7 +193,7 @@ header .nav-overlay.is-visible {
     align-items: center;
     justify-content: flex-start;
     gap: 36px;
-    padding: 0 60px;
+    padding: 0 90px;
   }
 
   header nav .nav-sections > li {
@@ -233,7 +238,11 @@ header .nav-overlay.is-visible {
     width: 100%;
     box-sizing: border-box;
     display: block;
-    padding: 56px max(40px, calc((100% - var(--content-max-width, 1248px)) / 2 + 24px)) 64px;
+
+    /* min-height keeps the heading and bottom logo from overlapping when a
+       panel has only a few links (e.g. News) */
+    min-height: 360px;
+    padding: 56px 90px 64px;
     background: #fff;
     opacity: 0;
     visibility: hidden;
@@ -245,7 +254,7 @@ header .nav-overlay.is-visible {
   /* injected section heading (Spectral italic) on the left half */
   header nav .nav-sections li.nav-drop > ul > .nav-megamenu-heading {
     position: absolute;
-    left: max(40px, calc((100% - var(--content-max-width, 1248px)) / 2 + 24px));
+    left: 90px;
     top: 56px;
     width: 45%;
     margin: 0;
@@ -256,6 +265,16 @@ header .nav-overlay.is-visible {
     line-height: 1;
     color: var(--text-color, #003349);
     text-transform: none;
+  }
+
+  /* Stagwell logo pinned to the bottom-left of the panel */
+  header nav .nav-sections li.nav-drop > ul > .nav-megamenu-logo {
+    display: block;
+    position: absolute;
+    left: 90px;
+    bottom: 64px;
+    width: 150px;
+    height: auto;
   }
 
   /* sub-links stack in the right half */

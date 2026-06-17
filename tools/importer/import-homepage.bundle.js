@@ -44,6 +44,7 @@ var CustomImportScript = (() => {
   // tools/importer/parsers/hero-intro.js
   function parse(element, { document }) {
     const logoImg = element.querySelector(".et_pb_image_0 img, .et_pb_image img");
+    const playIcon = element.querySelector(".et_pb_image_1 img");
     const announcement = element.querySelector(".et_pb_text_0 .et_pb_text_inner, .et_pb_text_0 p");
     const headingNodes = Array.from(
       element.querySelectorAll(".et_pb_text_1 h1, .et_pb_text_1 h2, .et_pb_text_1 h3, .et_pb_text_2 h1, .et_pb_text_2 h2, .et_pb_text_2 h3")
@@ -53,6 +54,11 @@ var CustomImportScript = (() => {
       cells.push([logoImg]);
     }
     const contentCell = document.createElement("div");
+    if (playIcon) {
+      const iconPara = document.createElement("p");
+      iconPara.append(playIcon);
+      contentCell.append(iconPara);
+    }
     if (announcement) {
       contentCell.append(announcement);
     }
