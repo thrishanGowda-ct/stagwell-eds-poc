@@ -46,6 +46,18 @@
   color: var(--text-color);
 }
 
+/* Circular play-icon before the webcast line — float left so the webcast
+   text wraps to its right, matching the source layout */
+.hero-intro > div:last-child p:first-child {
+  float: left;
+  margin: 0 16px 8px 0;
+}
+
+.hero-intro > div:last-child p:first-child img {
+  width: 44px;
+  height: 44px;
+}
+
 /* "HERE" inline link */
 .hero-intro a:any-link {
   font-family: var(--body-font-family);
@@ -61,7 +73,9 @@
 
 /* "Transforming / Marketing" headline (single h3 with <br>) */
 .hero-intro h3 {
+  clear: left;
   margin: 0;
+  padding-top: 16px;
   font-family: var(--heading-font-family);
   font-size: 36px;
   font-weight: 500;
