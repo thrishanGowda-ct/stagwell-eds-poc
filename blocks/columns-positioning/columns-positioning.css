@@ -2,6 +2,13 @@
  * Source: https://www.stagwellglobal.com/ (.et_pb_row_2)
  * Values extracted from source computed styles. */
 
+/* Wider 170px gutter for this section (overrides the global 90px) */
+@media (width >= 900px) {
+  main > .section.columns-positioning-container > div {
+    padding: 0 170px;
+  }
+}
+
 .columns-positioning > div {
   display: flex;
   flex-direction: column;

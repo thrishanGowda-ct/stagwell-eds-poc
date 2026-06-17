@@ -6,8 +6,8 @@ footer {
 }
 
 footer .footer > div {
-  margin: 0 auto;
-  max-width: 1200px;
+  margin: 0;
+  max-width: 100%;
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
@@ -106,7 +106,7 @@ footer .footer-legal a:hover {
     display: grid;
     grid-template-columns: max-content 1fr;
     column-gap: 32px;
-    padding: 40px 32px;
+    padding: 40px 90px;
   }
 
   footer .footer-logo {
