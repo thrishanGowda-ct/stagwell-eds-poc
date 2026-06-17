@@ -52,24 +52,6 @@ main .section.has-cards-stats-intro .default-content-wrapper p {
   opacity: 0.7;
 }
 
-main .section.has-cards-stats-intro .default-content-wrapper a:any-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--body-font-family);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-main .section.has-cards-stats-intro .default-content-wrapper a:hover {
-  color: var(--color-accent);
-  text-decoration: none;
-}
-
 /* CTA paragraph: label text node + arrow image link aligned on one row */
 main .section.has-cards-stats-intro .default-content-wrapper p:has(a) {
   display: flex;
@@ -89,6 +71,24 @@ main .section.has-cards-stats-intro .default-content-wrapper p:has(a) img {
   display: block;
   width: 24px;
   height: 24px;
+}
+
+main .section.has-cards-stats-intro .default-content-wrapper a:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--body-font-family);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+main .section.has-cards-stats-intro .default-content-wrapper a:hover {
+  color: var(--color-accent);
+  text-decoration: none;
 }
 
 /* ══ BLOCK-LEVEL: two-column layout (draft / test HTML only) ════════════════
