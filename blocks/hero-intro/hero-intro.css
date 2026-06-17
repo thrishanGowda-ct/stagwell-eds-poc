@@ -9,7 +9,7 @@
 }
 
 .hero-intro {
-  padding: 10px 24px 0;
+  padding: 90px 24px 20px;
   margin: 0 0 20px;
   color: var(--text-color);
 }
@@ -85,7 +85,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 40px;
-    padding: 10px 60px 0;
+    padding: 130px 60px 30px;
   }
 
   /* Logo row takes the larger left portion, text row the right */
@@ -93,8 +93,11 @@
     flex: 0 1 57%;
   }
 
+  /* vertical divider between logo and headline */
   .hero-intro > div:last-child {
     flex: 0 1 43%;
+    border-left: 1px solid rgb(0 51 73 / 20%);
+    padding-left: 40px;
   }
 
   .hero-intro h3 {

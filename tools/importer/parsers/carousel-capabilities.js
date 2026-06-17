@@ -49,5 +49,41 @@ export default function parse(element, { document }) {
     name: 'carousel-capabilities',
     cells,
   });
-  element.replaceWith(block);
+
+  // The slider's static intro panel ("Our Capabilities" heading + description +
+  // capability bullet list) is not part of the carousel block — preserve it as
+  // default content immediately before the block so the section keeps it.
+  const fragment = document.createDocumentFragment();
+
+  const titleEl = element.querySelector('.stagwell-main-slider__title');
+  if (titleEl) {
+    const heading = document.createElement('h2');
+    heading.innerHTML = titleEl.innerHTML;
+    fragment.append(heading);
+  }
+
+  const introTextEl = element.querySelector('.stagwell-main-slider__static .stagwell-main-slider__text');
+  if (introTextEl) {
+    introTextEl.querySelectorAll('p').forEach((p) => {
+      const text = p.textContent.trim();
+      if (text) {
+        const para = document.createElement('p');
+        para.textContent = text;
+        fragment.append(para);
+      }
+    });
+    const list = introTextEl.querySelector('ul');
+    if (list) {
+      const ul = document.createElement('ul');
+      list.querySelectorAll('li').forEach((li) => {
+        const item = document.createElement('li');
+        item.textContent = li.textContent.trim();
+        ul.append(item);
+      });
+      fragment.append(ul);
+    }
+  }
+
+  fragment.append(block);
+  element.replaceWith(fragment);
 }

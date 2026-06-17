@@ -3,7 +3,7 @@
 /* stylelint-disable no-descending-specificity -- megamenu nesting needs intentional override order */
 
 header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -12,12 +12,13 @@ header {
 }
 
 header .nav-wrapper {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 30;
-  background: transparent;
+  background: #fff;
+  border-bottom: 1px solid rgb(0 51 73 / 12%);
 }
 
 header nav {
@@ -156,9 +157,9 @@ header .nav-overlay.is-visible {
     position: static;
     align-items: normal;
     gap: normal;
-    width: 1040px;
+    width: 100%;
     max-width: 100%;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
     min-height: var(--nav-height, 70px);
   }
@@ -167,6 +168,7 @@ header .nav-overlay.is-visible {
     display: none;
   }
 
+  /* small logo at the top-right of the nav bar */
   header nav .nav-brand {
     position: absolute;
     top: 0;
@@ -176,12 +178,17 @@ header .nav-overlay.is-visible {
     align-items: center;
   }
 
+  header nav .nav-brand img {
+    width: 130px;
+  }
+
   /* top-level horizontal list */
   header nav ul.nav-sections {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 36px;
-    padding: 0 24px;
+    padding: 0 60px;
   }
 
   header nav .nav-sections > li {
