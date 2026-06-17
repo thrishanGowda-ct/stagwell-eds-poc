@@ -55,15 +55,22 @@ function toggleMenu(nav, navSections, overlay, forceExpanded = null) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // load nav as fragment
+  // load nav as fragment — try the configured/local path, then the published root path
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/content/nav';
-  const fragment = await loadFragment(navPath);
+  const candidatePaths = navMeta
+    ? [new URL(navMeta, window.location).pathname]
+    : ['/content/nav', '/nav'];
+  let fragment = null;
+  for (let i = 0; i < candidatePaths.length && !fragment; i += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    fragment = await loadFragment(candidatePaths[i]);
+  }
 
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
+  if (!fragment) return;
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -74,7 +81,10 @@ export default async function decorate(block) {
 
   // brand link cleanup
   const navBrand = nav.querySelector('.nav-brand');
+  let brandLogoSrc = '';
   if (navBrand) {
+    const brandImg = navBrand.querySelector('img');
+    if (brandImg) brandLogoSrc = brandImg.getAttribute('src') || '';
     const brandLink = navBrand.querySelector('.button');
     if (brandLink) {
       brandLink.className = '';
@@ -97,6 +107,16 @@ export default async function decorate(block) {
     }
   }
 
+  // unwrap <p> wrappers around top-level links so the `li > a` CSS selectors
+  // (navy, uppercase, bold) and the dropdown trigger detection both match
+  if (navSections) {
+    navSections.querySelectorAll(':scope > li > p').forEach((p) => {
+      if (p.children.length === 1 && p.firstElementChild.tagName === 'A') {
+        p.replaceWith(p.firstElementChild);
+      }
+    });
+  }
+
   // backdrop overlay
   const overlay = document.createElement('div');
   overlay.className = 'nav-overlay';
@@ -116,6 +136,16 @@ export default async function decorate(block) {
           heading.className = 'nav-megamenu-heading';
           heading.textContent = trigger.textContent.trim();
           submenu.prepend(heading);
+        }
+
+        // Stagwell logo at the bottom of every dropdown panel (matches source)
+        if (brandLogoSrc) {
+          const panelLogo = document.createElement('img');
+          panelLogo.className = 'nav-megamenu-logo';
+          panelLogo.src = brandLogoSrc;
+          panelLogo.alt = 'Stagwell';
+          panelLogo.loading = 'lazy';
+          submenu.append(panelLogo);
         }
 
         // desktop: open on hover of the list item (sibling panels close).

@@ -1,0 +1,246 @@
+/*
+ * form -- Stagwell newsletter sign-up (Web3Forms).
+ * Layout and typography matched to https://www.stagwellglobal.com/ .et_pb_section_9
+ */
+
+/* Section: teal band, generous vertical padding */
+main .section.accent:has(.form) {
+  margin: 0;
+}
+
+main .section.accent:has(.form) > div {
+  max-width: var(--content-max-width, 1248px);
+  padding: 0 32px;
+  margin: auto 6rem;
+}
+
+/* "Newsletter" + "Sign Up" headings live in default content above the block */
+main .section.accent:has(.form) .default-content-wrapper {
+  margin-bottom: 33px;
+}
+
+main .section.accent:has(.form) .default-content-wrapper h2 {
+  margin: 0;
+  color: #f5f7f6;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: clamp(36px, 4vw, 73px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+main .section.accent:has(.form) .default-content-wrapper h2 + h2 {
+  font-family: var(--display-font-family);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(36px, 6vw, 62px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.form .form-inner {
+  max-width: 100%;
+  margin: 0;
+}
+
+.form .form-web3 {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  max-width: 100%;
+}
+
+.form .form-row-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+.form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form .form-field label,
+.form .form-interests legend {
+  margin: 0;
+  color: #f5f7f6;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+
+.form .form-required {
+  margin-left: 2px;
+  color: #ff6b6b;
+}
+
+.form .form-field input[type="text"],
+.form .form-field input[type="email"] {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px 0 12px;
+  border: none;
+  border-bottom: 1px solid #f5f7f6;
+  border-radius: 0;
+  background: transparent;
+  color: #f5f7f6;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.form .form-field input::placeholder {
+  color: rgb(245 247 246 / 55%);
+}
+
+.form .form-field input:focus {
+  outline: none;
+  border-bottom-color: #fff;
+  box-shadow: 0 1px 0 0 #fff;
+}
+
+.form .form-interests {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form .form-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: #f5f7f6;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+  cursor: pointer;
+}
+
+.form .form-checkbox input[type="checkbox"] {
+  appearance: none;
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1px solid #f5f7f6;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.form .form-checkbox input[type="checkbox"]:checked {
+  background-color: #f5f7f6;
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+.form .form-checkbox input[type="checkbox"]:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.form .form-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  align-self: flex-start;
+  margin-top: 16px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--color-dark);
+  color: #f5f7f6;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.form .form-submit-arrow {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.form .form-submit:hover,
+.form .form-submit:focus-visible {
+  background-color: #001f2d;
+  color: #fff;
+}
+
+.form .form-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.form .form-status {
+  margin: 20px 0 0;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.form .form-status-success {
+  color: #f5f7f6;
+}
+
+.form .form-status-error {
+  color: #ff6b6b;
+}
+
+.form .form-success-message {
+  margin: 0;
+  color: rgb(245 247 246 / 70%);
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+main:has(.section.accent .form) + footer {
+  border-top: none;
+}
+
+@media (width >= 900px) {
+  main .section.accent:has(.form) > div {
+    padding: 0;
+    margin: auto 6rem
+  }
+
+  .form .form-row-split {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 80px;
+  }
+
+
+}
+
+@media (width < 600px) {
+  main .section.accent:has(.form) {
+    padding: 64px 0;
+  }
+
+  main .section.accent:has(.form) .default-content-wrapper {
+    margin-bottom: 48px;
+  }
+
+  main .section.accent:has(.form) > div {
+    padding: 0 24px;
+    margin: auto 6rem;
+  }
+}

@@ -44,6 +44,7 @@ var CustomImportScript = (() => {
   // tools/importer/parsers/hero-intro.js
   function parse(element, { document }) {
     const logoImg = element.querySelector(".et_pb_image_0 img, .et_pb_image img");
+    const playIcon = element.querySelector(".et_pb_image_1 img");
     const announcement = element.querySelector(".et_pb_text_0 .et_pb_text_inner, .et_pb_text_0 p");
     const headingNodes = Array.from(
       element.querySelectorAll(".et_pb_text_1 h1, .et_pb_text_1 h2, .et_pb_text_1 h3, .et_pb_text_2 h1, .et_pb_text_2 h2, .et_pb_text_2 h3")
@@ -53,6 +54,11 @@ var CustomImportScript = (() => {
       cells.push([logoImg]);
     }
     const contentCell = document.createElement("div");
+    if (playIcon) {
+      const iconPara = document.createElement("p");
+      iconPara.append(playIcon);
+      contentCell.append(iconPara);
+    }
     if (announcement) {
       contentCell.append(announcement);
     }
@@ -185,7 +191,36 @@ var CustomImportScript = (() => {
       name: "carousel-capabilities",
       cells
     });
-    element.replaceWith(block);
+    const fragment = document.createDocumentFragment();
+    const titleEl = element.querySelector(".stagwell-main-slider__title");
+    if (titleEl) {
+      const heading = document.createElement("h2");
+      heading.innerHTML = titleEl.innerHTML;
+      fragment.append(heading);
+    }
+    const introTextEl = element.querySelector(".stagwell-main-slider__static .stagwell-main-slider__text");
+    if (introTextEl) {
+      introTextEl.querySelectorAll("p").forEach((p) => {
+        const text = p.textContent.trim();
+        if (text) {
+          const para = document.createElement("p");
+          para.textContent = text;
+          fragment.append(para);
+        }
+      });
+      const list = introTextEl.querySelector("ul");
+      if (list) {
+        const ul = document.createElement("ul");
+        list.querySelectorAll("li").forEach((li) => {
+          const item = document.createElement("li");
+          item.textContent = li.textContent.trim();
+          ul.append(item);
+        });
+        fragment.append(ul);
+      }
+    }
+    fragment.append(block);
+    element.replaceWith(fragment);
   }
 
   // tools/importer/parsers/cards-stats.js

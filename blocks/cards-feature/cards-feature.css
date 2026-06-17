@@ -2,6 +2,13 @@
 
 /* Values extracted from source computed styles (stagwellglobal.com). */
 
+/* Wider 170px gutter for this section (overrides the global 90px) */
+@media (width >= 900px) {
+  main > .section.cards-feature-container > div {
+    padding: 0 170px;
+  }
+}
+
 .cards-feature > ul {
   list-style: none;
   margin: 0;

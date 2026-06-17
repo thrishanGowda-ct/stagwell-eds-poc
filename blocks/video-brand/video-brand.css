@@ -5,18 +5,17 @@
  * Poster: 16/9 cover image; play control: blue circle outline + blue triangle.
  */
 
-/* Let the block span the wide contained width from the source (row max-width 1560px,
-   60px side padding). EDS caps .section > div at 1200px, so widen the wrapper.
-   Match the global "main > .section > div" specificity to override it. */
+/* Full-width with the same 60px gutter as every other section so the video
+   shares the page's left/right edge at all viewport widths. */
 main > .section > .video-brand-wrapper {
-  max-width: 1560px;
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   padding: 0 16px;
 }
 
 @media (width >= 900px) {
   main > .section > .video-brand-wrapper {
-    padding: 0 60px;
+    padding: 0 90px;
   }
 }
 
