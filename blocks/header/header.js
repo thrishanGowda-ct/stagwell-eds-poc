@@ -81,7 +81,10 @@ export default async function decorate(block) {
 
   // brand link cleanup
   const navBrand = nav.querySelector('.nav-brand');
+  let brandLogoSrc = '';
   if (navBrand) {
+    const brandImg = navBrand.querySelector('img');
+    if (brandImg) brandLogoSrc = brandImg.getAttribute('src') || '';
     const brandLink = navBrand.querySelector('.button');
     if (brandLink) {
       brandLink.className = '';
@@ -133,6 +136,16 @@ export default async function decorate(block) {
           heading.className = 'nav-megamenu-heading';
           heading.textContent = trigger.textContent.trim();
           submenu.prepend(heading);
+        }
+
+        // Stagwell logo at the bottom of every dropdown panel (matches source)
+        if (brandLogoSrc) {
+          const panelLogo = document.createElement('img');
+          panelLogo.className = 'nav-megamenu-logo';
+          panelLogo.src = brandLogoSrc;
+          panelLogo.alt = 'Stagwell';
+          panelLogo.loading = 'lazy';
+          submenu.append(panelLogo);
         }
 
         // desktop: open on hover of the list item (sibling panels close).
