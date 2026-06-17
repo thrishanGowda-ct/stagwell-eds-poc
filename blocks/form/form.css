@@ -218,7 +218,7 @@ main:has(.section.accent .form) + footer {
 
 @media (width >= 900px) {
   main .section.accent:has(.form) > div {
-    padding: 0 48px;
+    padding: 0;
     margin: auto 6rem
   }
 
