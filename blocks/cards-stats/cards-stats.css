@@ -45,11 +45,32 @@ main .section.has-cards-stats-intro .default-content-wrapper h3 + h3 {
 }
 
 main .section.has-cards-stats-intro .default-content-wrapper p {
-  margin: 20px 0 0;
+  margin: 65px 0 0;
   font-size: var(--body-font-size-xs);
   line-height: 1.65;
   color: var(--text-color);
   opacity: 0.7;
+}
+
+/* CTA paragraph: label text node + arrow image link aligned on one row */
+main .section.has-cards-stats-intro .default-content-wrapper p:has(a) {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 1;
+}
+
+main .section.has-cards-stats-intro .default-content-wrapper p:has(a) a {
+  display: inline-flex;
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+main .section.has-cards-stats-intro .default-content-wrapper p:has(a) picture,
+main .section.has-cards-stats-intro .default-content-wrapper p:has(a) img {
+  display: block;
+  width: 24px;
+  height: 24px;
 }
 
 main .section.has-cards-stats-intro .default-content-wrapper a:any-link {
@@ -211,13 +232,14 @@ main .section.dark.has-cards-stats-intro .default-content-wrapper a:hover {
   }
 
   main .section.has-cards-stats-intro .default-content-wrapper {
-    padding: 80px 48px;
+    /* outer edge aligns to the global 90px gutter */
+    padding: 80px 48px 80px 90px;
     border-right: 1px solid rgb(0 51 73 / 12%);
   }
 
-  main .section.dark.has-cards-stats-intro .default-content-wrapper {
+  /* main .section.dark.has-cards-stats-intro .default-content-wrapper {
     border-right-color: rgb(255 255 255 / 15%);
-  }
+  } */
 
   .cards-stats ul {
     grid-template-columns: repeat(2, 1fr);
@@ -240,7 +262,8 @@ main .section.dark.has-cards-stats-intro .default-content-wrapper a:hover {
   }
 
   main .section.has-cards-stats-intro .cards-stats ul {
-    padding: 80px 48px;
+    /* outer edge aligns to the global 90px gutter */
+    padding: 80px 90px 80px 48px;
   }
 
   /* hairline divider above the second row (items 3 and 4) */
@@ -251,6 +274,6 @@ main .section.dark.has-cards-stats-intro .default-content-wrapper a:hover {
   }
 
   .section.dark .cards-stats li:nth-child(n + 3) {
-    border-top-color: rgb(255 255 255 / 20%);
+    border-top-color: #fff;
   }
 }
