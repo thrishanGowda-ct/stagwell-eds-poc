@@ -108,7 +108,15 @@ const loadVideoEmbed = (block, link, autoplay, background) => {
 
 export default async function decorate(block) {
   const placeholder = block.querySelector('picture');
-  const link = block.querySelector('a').href;
+  const anchor = block.querySelector('a');
+  // The authoring pipeline rewrites a bare media href into a sanitized internal
+  // path (e.g. ".mp4" -> "-mp4", domain dropped), which breaks playback. The
+  // link text preserves the original absolute URL, so prefer it when it looks
+  // like a real media URL; fall back to the href otherwise.
+  const linkText = anchor.textContent.trim();
+  const link = /^https?:\/\/\S+\.(mp4|webm|ogv|m4v|mov)$/i.test(linkText)
+    ? linkText
+    : anchor.href;
   block.textContent = '';
   block.dataset.embedLoaded = false;
 

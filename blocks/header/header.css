@@ -133,6 +133,11 @@ header nav .nav-sections > li > ul > li > a {
   text-decoration: none;
 }
 
+/* dropdown-panel logo — hidden on mobile, shown bottom-left on desktop */
+header nav .nav-megamenu-logo {
+  display: none;
+}
+
 /* white overlay behind open megamenu (scrim below the nav bar; visual only) */
 header .nav-overlay {
   position: fixed;
@@ -233,6 +238,10 @@ header .nav-overlay.is-visible {
     width: 100%;
     box-sizing: border-box;
     display: block;
+
+    /* min-height keeps the heading and bottom logo from overlapping when a
+       panel has only a few links (e.g. News) */
+    min-height: 360px;
     padding: 56px max(40px, calc((100% - var(--content-max-width, 1248px)) / 2 + 24px)) 64px;
     background: #fff;
     opacity: 0;
@@ -256,6 +265,16 @@ header .nav-overlay.is-visible {
     line-height: 1;
     color: var(--text-color, #003349);
     text-transform: none;
+  }
+
+  /* Stagwell logo pinned to the bottom-left of the panel */
+  header nav .nav-sections li.nav-drop > ul > .nav-megamenu-logo {
+    display: block;
+    position: absolute;
+    left: max(40px, calc((100% - var(--content-max-width, 1248px)) / 2 + 24px));
+    bottom: 64px;
+    width: 150px;
+    height: auto;
   }
 
   /* sub-links stack in the right half */
