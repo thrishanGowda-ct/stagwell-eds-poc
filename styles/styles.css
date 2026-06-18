@@ -302,8 +302,8 @@ main > .section {
 }
 
 main > .section > div {
-  max-width: 1200px;
-  margin: auto;
+  max-width: 100%;
+  margin: 0;
   padding: 0 24px;
 }
 
@@ -313,7 +313,9 @@ main > .section:first-of-type {
 
 @media (width >= 900px) {
   main > .section > div {
-    padding: 0 32px;
+    /* full-width with a fixed 90px gutter so every section's content shares
+       the same left/right edge as the hero, matching the source site */
+    padding: 0 90px;
   }
 }
 

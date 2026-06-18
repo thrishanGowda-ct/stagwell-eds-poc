@@ -23,6 +23,9 @@ export default function parse(element, { document }) {
   // Extended Stagwell logo image. First image module in the section.
   const logoImg = element.querySelector('.et_pb_image_0 img, .et_pb_image img');
 
+  // Circular play-icon shown before the webcast line (second image module).
+  const playIcon = element.querySelector('.et_pb_image_1 img');
+
   // Earnings webcast announcement line (paragraph with inline link).
   const announcement = element.querySelector('.et_pb_text_0 .et_pb_text_inner, .et_pb_text_0 p');
 
@@ -43,6 +46,13 @@ export default function parse(element, { document }) {
   // Wrap in a single container so the row renders as ONE column (one cell),
   // not multiple columns.
   const contentCell = document.createElement('div');
+
+  // Play-icon precedes the webcast announcement line.
+  if (playIcon) {
+    const iconPara = document.createElement('p');
+    iconPara.append(playIcon);
+    contentCell.append(iconPara);
+  }
 
   if (announcement) {
     contentCell.append(announcement);
