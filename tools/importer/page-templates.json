@@ -371,6 +371,126 @@
           ]
         }
       ]
+    },
+    {
+      "name": "augmented-reality",
+      "urls": [
+        "https://www.stagwellglobal.com/augmented-reality/"
+      ],
+      "representativeUrl": "https://www.stagwellglobal.com/augmented-reality/",
+      "coverageGaps": [],
+      "description": "Stagwell Augmented Reality marketing-frontiers page: hero intro, intro copy, AR tech feature quote, three AR article cards, Data Corner stats, contact, and newsletter",
+      "blocks": [
+        {
+          "name": "hero-intro",
+          "instances": [
+            ".et_pb_section_0 .et_pb_row_0"
+          ]
+        },
+        {
+          "name": "columns-positioning",
+          "instances": [
+            ".et_pb_section_0 .et_pb_row_2"
+          ]
+        },
+        {
+          "name": "cards-feature",
+          "instances": [
+            ".et_pb_section_0 .et_pb_row_4",
+            ".et_pb_section_0 .et_pb_row_6",
+            ".et_pb_section_0 .et_pb_row_8"
+          ]
+        },
+        {
+          "name": "cards-stats",
+          "instances": [
+            ".et_pb_section_1 .et_pb_column_19"
+          ]
+        },
+        {
+          "name": "form",
+          "instances": [
+            ".hbspt-form"
+          ]
+        },
+        {
+          "name": "section-newsletter",
+          "instances": [
+            ".et_pb_section_4"
+          ],
+          "section": "accent"
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "Hero Intro",
+          "selector": ".et_pb_section_0 .et_pb_row_0",
+          "style": "light",
+          "blocks": [
+            "hero-intro"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "Intro Copy",
+          "selector": ".et_pb_section_0 .et_pb_row_1",
+          "style": "light",
+          "blocks": [],
+          "defaultContent": [
+            ".et_pb_section_0 .et_pb_row_1 .et_pb_text_inner"
+          ]
+        },
+        {
+          "id": "section-3",
+          "name": "Our AR Tech in Action",
+          "selector": ".et_pb_section_0 .et_pb_row_2",
+          "style": "light",
+          "blocks": [
+            "columns-positioning"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-4",
+          "name": "AR Article Cards",
+          "selector": ".et_pb_section_0 .et_pb_row_4",
+          "style": "light",
+          "blocks": [
+            "cards-feature"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-5",
+          "name": "Data Corner",
+          "selector": ".et_pb_section_1",
+          "style": "light",
+          "blocks": [
+            "cards-stats"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-6",
+          "name": "Contact Us",
+          "selector": "#sw-contact-us",
+          "style": "light",
+          "blocks": [],
+          "defaultContent": []
+        },
+        {
+          "id": "section-7",
+          "name": "Newsletter Sign Up",
+          "selector": ".et_pb_section_4",
+          "style": "accent",
+          "blocks": [
+            "form"
+          ],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }

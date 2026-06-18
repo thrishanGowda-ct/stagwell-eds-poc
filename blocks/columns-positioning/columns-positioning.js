@@ -13,6 +13,10 @@ export default function decorate(block) {
           picWrapper.classList.add('columns-positioning-img-col');
         }
       }
+      // flag cells that carry a pull-quote (testimonial variant)
+      if (col.querySelector('blockquote')) {
+        col.classList.add('columns-positioning-quote');
+      }
     });
   });
 }
