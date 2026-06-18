@@ -26,13 +26,24 @@ export default function parse(element, { document }) {
   // Circular play-icon shown before the webcast line (second image module).
   const playIcon = element.querySelector('.et_pb_image_1 img');
 
-  // Earnings webcast announcement line (paragraph with inline link).
-  const announcement = element.querySelector('.et_pb_text_0 .et_pb_text_inner, .et_pb_text_0 p');
-
-  // Two-line headline lives across two text modules, each containing a single heading.
-  const headingNodes = Array.from(
-    element.querySelectorAll('.et_pb_text_1 h1, .et_pb_text_1 h2, .et_pb_text_1 h3, .et_pb_text_2 h1, .et_pb_text_2 h2, .et_pb_text_2 h3'),
-  );
+  // Walk the text modules in source order so the parser adapts to whatever
+  // mix of headings/paragraphs a page provides (the homepage leads with an
+  // announcement paragraph then the headline; About Us leads with the headline
+  // then an intro paragraph). Consecutive headings are merged into one
+  // multi-line headline; paragraphs are kept in place.
+  const textInners = Array.from(element.querySelectorAll('.et_pb_text .et_pb_text_inner'));
+  const items = [];
+  textInners.forEach((inner) => {
+    Array.from(inner.children)
+      .filter((node) => node.matches('h1, h2, h3, h4, h5, h6, p'))
+      .forEach((node) => items.push(node));
+    // Fallback: text module with no element children (plain text) → wrap as <p>.
+    if (!inner.children.length && (inner.textContent || '').trim()) {
+      const p = document.createElement('p');
+      p.textContent = inner.textContent.trim();
+      items.push(p);
+    }
+  });
 
   // --- BUILD CELLS (matches hero block table structure) ---
   const cells = [];
@@ -42,32 +53,36 @@ export default function parse(element, { document }) {
     cells.push([logoImg]);
   }
 
-  // Content row: announcement line followed by the combined headline.
-  // Wrap in a single container so the row renders as ONE column (one cell),
-  // not multiple columns.
+  // Content row. Wrap in a single container so the row renders as ONE column.
   const contentCell = document.createElement('div');
 
-  // Play-icon precedes the webcast announcement line.
+  // Play-icon precedes the content.
   if (playIcon) {
     const iconPara = document.createElement('p');
     iconPara.append(playIcon);
     contentCell.append(iconPara);
   }
 
-  if (announcement) {
-    contentCell.append(announcement);
-  }
-
-  if (headingNodes.length) {
-    // Combine the two headline lines into a single heading so it renders as
-    // one two-line headline ("Transforming Marketing"). Preserve the heading level.
-    const level = headingNodes[0].tagName.toLowerCase();
-    const heading = document.createElement(level);
-    const lines = headingNodes
-      .map((h) => (h.textContent || '').trim())
-      .filter((t) => t.length);
-    heading.innerHTML = lines.join('<br>');
-    contentCell.append(heading);
+  // Emit items in order, merging runs of consecutive headings into a single
+  // multi-line heading element.
+  let i = 0;
+  while (i < items.length) {
+    const node = items[i];
+    if (/^h[1-6]$/i.test(node.tagName)) {
+      const runLevel = node.tagName.toLowerCase();
+      const lines = [];
+      while (i < items.length && /^h[1-6]$/i.test(items[i].tagName)) {
+        const t = (items[i].textContent || '').trim();
+        if (t.length) lines.push(t);
+        i += 1;
+      }
+      const heading = document.createElement(runLevel);
+      heading.innerHTML = lines.join('<br>');
+      contentCell.append(heading);
+    } else {
+      contentCell.append(node);
+      i += 1;
+    }
   }
 
   cells.push([contentCell]);
