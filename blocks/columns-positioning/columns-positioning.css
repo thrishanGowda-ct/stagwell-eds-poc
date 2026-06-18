@@ -2,10 +2,14 @@
  * Source: https://www.stagwellglobal.com/ (.et_pb_row_2)
  * Values extracted from source computed styles. */
 
-/* Wider 170px gutter for this section (overrides the global 90px) */
+/* Wider 170px gutter for homepage positioning only (not About Us our-story) */
 @media (width >= 900px) {
-  main > .section.columns-positioning-container > div {
+  main > .section.columns-positioning-container:not(:has(.columns-positioning-media)) > div {
     padding: 0 170px;
+  }
+
+  main > .section.columns-positioning-container:has(.columns-positioning-media) > div {
+    padding: 0 90px;
   }
 }
 
@@ -25,12 +29,12 @@
   color: var(--text-color);
 }
 
-/* Column 2: "Effective" -- italic Spectral display serif, accent teal */
-.columns-positioning > div > div:nth-child(2) h2 {
+/* "Effective" rendered inline inside col1's h2 */
+.columns-positioning-effective {
+  display: inline;
   font-family: var(--display-font-family);
   font-weight: 300;
   font-style: italic;
-  line-height: 1;
   color: var(--color-accent);
 }
 
@@ -67,118 +71,122 @@
 }
 
 .columns-positioning a img {
-  width: 24px;
-  height: 24px;
-  margin-left: 15px;
-}
-
-/* --------------------------------------------------------------------------
- * Pull-quote / testimonial variant (Augmented Reality: "Our AR Tech in Action")
- * Only this usage carries an h3 + blockquote + em attribution; the JS adds the
- * .columns-positioning-quote class to that cell. The homepage (h2 positioning)
- * and about-us (h2 + image/text) usages have none of these, so the rules below
- * never affect them. Source values from .et_pb_testimonial computed styles.
- * ------------------------------------------------------------------------ */
-
-/* Heading: italic Spectral display serif, navy with teal emphasis */
-.columns-positioning-quote h3 {
-  margin: 0;
-  padding-bottom: 10px;
-  font-family: var(--display-font-family);
-  font-weight: 500;
-  font-style: italic;
-  font-size: 36px;
-  line-height: 0.9;
-  letter-spacing: -0.36px;
-  color: var(--text-color);
-}
-
-.columns-positioning-quote h3 strong {
-  font-weight: 700;
-  color: var(--color-accent);
-}
-
-/* Quote text: uppercase Montserrat light, preceded by a gold quotation mark */
-.columns-positioning-quote blockquote {
-  position: relative;
-  margin: 0;
-  padding: 0;
-}
-
-.columns-positioning-quote blockquote::before {
-  content: "";
-  display: block;
-  width: 38px;
+  width: 28px;
   height: 28px;
-  margin-bottom: 12px;
-  background-image: url("data:image/svg+xml,%3Csvg width='51' height='37' viewBox='0 0 51 37' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10.4495 37C9.92966 37 9.40979 36.9492 8.88991 36.8477C8.47401 36.7462 7.90214 36.4925 7.17431 36.0864C4.88685 34.3608 3.11927 32.5844 1.87156 30.7572C0.623853 28.93 0 26.3923 0 23.144C0 20.5048 0.883791 17.6118 2.65137 14.465C4.41896 11.2167 7.07034 8.27298 10.6055 5.63374C14.1407 2.99452 18.5076 1.1166 23.7064 0V2.74074C18.6116 4.06036 14.6606 6.09054 11.8532 8.83128C9.04587 11.572 7.6422 14.7696 7.6422 18.4239C7.6422 19.9465 8.00612 21.3676 8.73395 22.6872C9.46177 24.0069 10.7615 25.225 12.633 26.3416L16.844 29.0823V30.6049L14.8165 33.9547C14.0887 35.1728 13.3609 35.9849 12.633 36.3909C11.9052 36.797 11.1774 37 10.4495 37ZM37.7431 37C37.2232 37 36.7034 36.9492 36.1835 36.8477C35.7676 36.7462 35.1957 36.4925 34.4679 36.0864C32.1804 34.3608 30.4128 32.5844 29.1651 30.7572C27.9174 28.93 27.2936 26.3923 27.2936 23.144C27.2936 20.5048 28.1774 17.6118 29.945 14.465C31.7125 11.2167 34.3639 8.27298 37.8991 5.63374C41.4343 2.99452 45.8012 1.1166 51 0V2.74074C45.9052 4.06036 41.9541 6.09054 39.1468 8.83128C36.3395 11.572 34.9358 14.7696 34.9358 18.4239C34.9358 19.9465 35.2997 21.3676 36.0275 22.6872C36.7554 24.0069 38.055 25.225 39.9266 26.3416L44.1376 29.0823V30.6049L42.1101 33.9547C41.3823 35.1728 40.6544 35.9849 39.9266 36.3909C39.1988 36.797 38.471 37 37.7431 37Z' fill='%23FFB81C'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: contain;
+  margin-left: 12px;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 
-.columns-positioning-quote blockquote p:only-child {
-  margin: 0;
-  padding-bottom: 24px;
-  font-family: var(--body-font-family);
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 1.5;
-  text-transform: uppercase;
-  color: var(--text-color);
-}
-
-.columns-positioning-quote blockquote p strong {
-  font-weight: 400;
-}
-
-/* Attribution ("Forbes"): bold Montserrat, not italic */
-.columns-positioning-quote blockquote + p:last-child {
-  margin: 0;
-  font-family: var(--body-font-family);
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--text-color);
-}
-
-.columns-positioning-quote blockquote + p em {
-  font-style: normal;
-}
-
-/* Desktop quote typography */
+/* Desktop: homepage two-column layout — heading left, description + CTA right */
 @media (width >= 900px) {
-  .columns-positioning-quote h3 {
-    font-size: 48px;
-    letter-spacing: -0.48px;
-  }
-
-  .columns-positioning-quote blockquote p:only-child {
-    font-size: 24px;
-  }
-}
-
-/* Desktop: three columns side by side */
-@media (width >= 900px) {
-  .columns-positioning > div {
+  .columns-positioning:not(.columns-positioning-media) > div {
     flex-direction: row;
     gap: 20px;
     align-items: flex-start;
   }
 
-  .columns-positioning > div > div:nth-child(1) {
-    flex: 0 0 28%;
+  .columns-positioning:not(.columns-positioning-media) > div > div:nth-child(1) {
+    flex: 0 0 63%;
   }
 
-  .columns-positioning > div > div:nth-child(2) {
+  .columns-positioning .columns-positioning-cta-col {
     flex: 1 1 0;
+    padding-left: clamp(40px, 5vw, 80px);
+    max-width: 320px;
   }
 
-  .columns-positioning > div > div:nth-child(3) {
-    flex: 1 0 30%;
-    padding-left: clamp(40px, 12vw, 160px);
-  }
-
-  .columns-positioning h2 {
+  .columns-positioning:not(.columns-positioning-media) h2 {
     font-size: 50px;
+  }
+}
+
+/* About Us (/en/about-us): "Our Story" text + image — source .et_pb_section_1 */
+.columns-positioning-media > div {
+  gap: 2.5rem;
+}
+
+.columns-positioning-media .columns-positioning-media-text h2 {
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.columns-positioning-story-accent {
+  font-family: var(--display-font-family);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--color-accent);
+}
+
+.columns-positioning-media .columns-positioning-media-image picture,
+.columns-positioning-media .columns-positioning-media-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (width >= 900px) {
+  .columns-positioning-media > div {
+    flex-direction: row;
+    gap: 6rem;
+  }
+
+  .columns-positioning-media .columns-positioning-media-text {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .columns-positioning-media .columns-positioning-media-image {
+    flex: 0 0 55%;
+    min-width: 0;
+  }
+
+  .columns-positioning-media .columns-positioning-media-text h2 {
+    font-size: 56px;
+    margin-bottom: 3rem;
+  }
+
+  .columns-positioning-story-accent {
+    font-size: 62px;
+    line-height: 0.95;
+  }
+}
+
+/* About Us (/en/about-us): "Our Impact" image left + text right */
+@media (width >= 900px) {
+  main > .section:has(.columns-positioning-media-left) > div {
+    padding-inline: 90px;
+  }
+}
+
+.columns-positioning-media-left > div {
+  gap: 2.5rem;
+}
+
+@media (width >= 900px) {
+  .columns-positioning-media-left > div {
+    flex-direction: row;
+    align-items: center;
+    gap: 6rem;
+  }
+
+  .columns-positioning-media-left .columns-positioning-media-image {
+    flex: 0 0 55%;
+    min-width: 0;
+  }
+
+  .columns-positioning-media-left .columns-positioning-media-text {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .columns-positioning-media-left .columns-positioning-media-text h2 {
+    font-size: 56px;
+    margin-bottom: 3rem;
   }
 }

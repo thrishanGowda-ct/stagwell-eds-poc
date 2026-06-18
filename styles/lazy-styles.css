@@ -1,1 +1,208 @@
-/* add global styles that can be loaded post LCP here */
+/* About Us (/en/about-us): "Accelerating Change" mission — source .et_pb_section_2 */
+
+/* Align About intro, Our Story, and mission on the same 90px gutter as the nav */
+@media (width >= 900px) {
+  main > .section:has(.hero-intro-about) > div,
+  main > .section:has(.columns-positioning-media) > div,
+  main > .section.about-mission > div {
+    padding-inline: 90px;
+  }
+}
+
+main > .section.about-mission {
+  background-color: #f5f7f6;
+  margin: 0;
+}
+
+@media (width >= 900px) {
+  main > .section.about-mission {
+    padding: 3rem 0;
+  }
+}
+
+.about-mission-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.about-mission-content h4 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+.about-mission-content p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  color: var(--text-color);
+}
+
+@media (width >= 900px) {
+  .about-mission-content {
+    grid-template-columns: 2fr 1fr;
+    gap: 0 3rem;
+    align-items: start;
+  }
+
+  .about-mission-content h4 {
+    font-size: 24px;
+  }
+
+  .about-mission-content p {
+    border-left: 1px solid #c5c6c7;
+    padding-left: 2rem;
+    max-width: 40rem;
+    font-size: 24px;
+    line-height: 1.55;
+  }
+}
+
+/* About Us (/en/about-us): Contact Us — source #sw-contact-us */
+
+main > .section.contact-section {
+  background-color: #f5f7f6;
+  margin: 0;
+  padding: 5rem 0;
+}
+
+main > .section.contact-section.light {
+  background-color: #f5f7f6;
+}
+
+@media (width >= 900px) {
+  main > .section.contact-section {
+    padding: 6rem 0;
+  }
+
+  main > .section.contact-section > div {
+    padding-inline: 90px;
+  }
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+.contact-heading {
+  margin: 0;
+}
+
+.contact-heading h2 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--text-color);
+}
+
+.contact-heading .contact-heading-accent {
+  font-family: var(--display-font-family);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 36px;
+  letter-spacing: -0.04em;
+  color: var(--color-accent-gold);
+}
+
+.contact-intro {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  color: var(--text-color);
+}
+
+.contact-column p {
+  margin: 0 0 0.5rem;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  color: var(--text-color);
+}
+
+.contact-column p:has(strong) {
+  margin: 0 0 0.25rem;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+.contact-column p:has(strong) ~ p:has(strong) {
+  margin-top: 2.5rem;
+}
+
+.contact-column a:any-link {
+  color: var(--text-color);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.contact-column a:any-link:hover {
+  color: var(--color-accent-gold);
+}
+
+@media (width >= 900px) {
+  .contact-layout {
+    grid-template-columns: 55fr 22.5fr 22.5fr;
+    gap: 3rem 6rem;
+  }
+
+  .contact-heading {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .contact-intro {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    align-self: start;
+    max-width: 20rem;
+  }
+
+  .contact-heading h2 {
+    font-size: 56px;
+  }
+
+  .contact-heading .contact-heading-accent {
+    font-size: 62px;
+  }
+
+  .contact-column-emails {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .contact-column-phone {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .contact-column-address {
+    grid-column: 3;
+    grid-row: 2;
+  }
+}

@@ -2,6 +2,11 @@
 
 /* Values extracted from source computed styles (stagwellglobal.com). */
 
+/* Section background: white top → light grey bottom */
+main > .section.cards-feature-container {
+  background-image: linear-gradient(180deg, #fff 65%, #f5f7f6 65%) !important;
+}
+
 /* Wider 170px gutter for this section (overrides the global 90px) */
 @media (width >= 900px) {
   main > .section.cards-feature-container > div {
@@ -23,11 +28,28 @@
   flex-direction: column;
 }
 
-/* image first, sized full-width with a landscape ratio matching source (258 x 149) */
+/* title: left border is the grey accent line; padding-left creates space between line and text */
+.cards-feature .cards-feature-card-title {
+  margin: 12px 0 0;
+  border-left: 2px solid #d9d9d9;
+  padding: 0 0 24px 16px;
+}
+
+.cards-feature .cards-feature-card-title h1,
+.cards-feature .cards-feature-card-title h2,
+.cards-feature .cards-feature-card-title h3,
+.cards-feature .cards-feature-card-title h4,
+.cards-feature .cards-feature-card-title h5,
+.cards-feature .cards-feature-card-title h6 {
+  margin: 0;
+}
+
+
+
+
+
 .cards-feature .cards-feature-card-image {
-  order: 0;
   line-height: 0;
-  margin: 0 0 20px;
 }
 
 .cards-feature .cards-feature-card-image img {
@@ -38,25 +60,13 @@
   object-fit: cover;
 }
 
-/* body holds heading + paragraph */
+/* body holds the description paragraph */
 .cards-feature .cards-feature-card-body {
-  order: 1;
-}
-
-.cards-feature .cards-feature-card-body h3 {
-  margin: 0 0 30px;
-  padding: 0;
-  font-family: var(--heading-font-family);
-  font-size: var(--heading-font-size-m); /* 24px desktop */
-  font-weight: 500;
-  line-height: 1.16;
-  letter-spacing: 2px;
-  color: var(--text-color);
+  padding: 20px 0 0;
 }
 
 .cards-feature .cards-feature-card-body p {
   margin: 0;
-  font-family: var(--body-font-family);
   font-size: 15px;
   line-height: 1.55;
   color: var(--text-color);

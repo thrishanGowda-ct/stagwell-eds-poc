@@ -144,6 +144,153 @@ function decorateButtons(main) {
 }
 
 /**
+ * Challenger Marketing Network section headings.
+ * @param {Element} main The main element
+ */
+function decorateChallengerSection(main) {
+  main.querySelectorAll('.section').forEach((section) => {
+    if (!section.querySelector('.cards-stats')) return;
+
+    const headings = [...section.querySelectorAll('h2')]
+      .filter((h) => !h.closest('.cards-stats'));
+    const challenger = headings.find((h) => /^the challenger$/i.test(h.textContent.trim()));
+    const network = headings.find((h) => /^marketing network$/i.test(h.textContent.trim()));
+    if (!challenger || !network || challenger.closest('.challenger-heading')) return;
+
+    section.classList.add('challenger-section');
+
+    const group = document.createElement('div');
+    group.classList.add('challenger-heading');
+    challenger.before(group);
+    group.append(challenger, network);
+    network.classList.add('challenger-heading-accent');
+  });
+}
+
+/**
+ * About Us leadership section: heading + carousel blocks.
+ * @param {Element} main The main element
+ */
+function decorateLeadershipSection(main) {
+  main.querySelectorAll('.section').forEach((section) => {
+    if (!section.querySelector('.carousel-leadership')) return;
+
+    section.classList.add('leadership-section');
+
+    const headings = [...section.querySelectorAll('h2')]
+      .filter((h) => !h.closest('.carousel-leadership'));
+    const executive = headings.find((h) => /^our executive$/i.test(h.textContent.trim()));
+    const leadership = headings.find((h) => /^leadership$/i.test(h.textContent.trim()));
+    if (!executive || !leadership || executive.closest('.leadership-heading')) return;
+
+    const group = document.createElement('div');
+    group.classList.add('leadership-heading');
+    executive.before(group);
+    group.append(executive, leadership);
+    leadership.classList.add('leadership-heading-accent');
+  });
+}
+
+/**
+ * Contact Us section: heading + intro row, three-column contact details.
+ * @param {Element} main The main element
+ */
+function decorateContactSection(main) {
+  main.querySelectorAll('.section').forEach((section) => {
+    if (section.classList.contains('contact-section')) return;
+
+    const wrapper = section.querySelector(':scope > .default-content-wrapper');
+    if (!wrapper || section.querySelector('.block')) return;
+
+    const heading = [...wrapper.querySelectorAll('h2')].find((h) => /contact/i.test(h.textContent));
+    if (!heading) return;
+
+    const intro = [...wrapper.querySelectorAll('p')].find((p) => (
+      !p.querySelector('strong') && /get in touch|message/i.test(p.textContent)
+    ));
+    const detailPs = [...wrapper.querySelectorAll('p')].filter((p) => p !== intro);
+
+    const phoneIdx = detailPs.findIndex((p) => (
+      /^phone$/i.test(p.querySelector('strong')?.textContent.trim() || '')
+    ));
+    const addressIdx = detailPs.findIndex((p) => (
+      /^global address$/i.test(p.querySelector('strong')?.textContent.trim() || '')
+    ));
+    if (phoneIdx < 0 || addressIdx < 0) return;
+
+    const hasGeneral = detailPs.slice(0, phoneIdx).some((p) => (
+      /^general$/i.test(p.querySelector('strong')?.textContent.trim() || '')
+    ));
+    if (!hasGeneral) return;
+
+    section.classList.add('contact-section');
+
+    const headingEl = document.createElement('h2');
+    const accentSpan = heading.querySelector('span');
+    if (accentSpan) {
+      headingEl.append(document.createTextNode('Contact '));
+      const accent = document.createElement('span');
+      accent.className = 'contact-heading-accent';
+      accent.textContent = accentSpan.textContent.trim();
+      headingEl.append(accent);
+      heading.remove();
+    } else if (/^contact\s+us$/i.test(heading.textContent.trim())) {
+      headingEl.append(document.createTextNode('Contact '));
+      const accent = document.createElement('span');
+      accent.className = 'contact-heading-accent';
+      accent.textContent = 'Us';
+      headingEl.append(accent);
+      heading.remove();
+    } else {
+      headingEl.textContent = heading.textContent;
+      heading.remove();
+    }
+
+    const headingWrap = document.createElement('div');
+    headingWrap.className = 'contact-heading';
+    headingWrap.append(headingEl);
+
+    if (intro) intro.classList.add('contact-intro');
+
+    const layout = document.createElement('div');
+    layout.className = 'contact-layout';
+    wrapper.prepend(layout);
+    layout.append(headingWrap);
+    if (intro) layout.append(intro);
+
+    const columnClasses = ['contact-column-emails', 'contact-column-phone', 'contact-column-address'];
+    [
+      detailPs.slice(0, phoneIdx),
+      detailPs.slice(phoneIdx, addressIdx),
+      detailPs.slice(addressIdx),
+    ].forEach((paragraphs, index) => {
+      const column = document.createElement('div');
+      column.className = `contact-column ${columnClasses[index]}`;
+      paragraphs.forEach((p) => column.append(p));
+      layout.append(column);
+    });
+  });
+}
+
+/**
+ * About Us mission section: "Accelerating Change. Revolutionizing Growth."
+ * @param {Element} main The main element
+ */
+function decorateAboutMissionSection(main) {
+  main.querySelectorAll('.section').forEach((section) => {
+    if (section.querySelector('.block')) return;
+
+    const h4 = section.querySelector('h4');
+    const p = section.querySelector('p');
+    if (!h4 || !p || !/accelerating change/i.test(h4.textContent)) return;
+
+    section.classList.add('about-mission');
+    const content = h4.parentElement;
+    if (content) content.classList.add('about-mission-content');
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -153,6 +300,10 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSectionMetadata(main);
   decorateSections(main);
+  decorateChallengerSection(main);
+  decorateLeadershipSection(main);
+  decorateContactSection(main);
+  decorateAboutMissionSection(main);
   decorateBlocks(main);
   decorateButtons(main);
 }
