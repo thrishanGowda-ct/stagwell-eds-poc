@@ -1,0 +1,41 @@
+{
+  "variantName": "carousel-leadership",
+  "baseBlock": "carousel",
+  "version": "1.0.0",
+  "created": "2026-06-18T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.stagwellglobal.com/about-us/",
+    "originPage": "Stagwell About Us page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "leadership-people-carousel",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "1 featured person (portrait + pull-quote + name + title + bio link) followed by ~20 people cards (portrait + name + title + bio link), horizontally scrollable",
+    "buttonCount": 0,
+    "imageCount": 21,
+    "perRow": "image cell + content cell (name, title, optional quote), optionally wrapped in a bio link"
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "executive / leadership team people carousels",
+      "horizontally-scrolling grids of people cards (photo + name + title) linking to bio pages",
+      "team or staff directories with an optional featured/lead person and pull-quote"
+    ],
+    "notSuitableFor": [
+      "full-bleed image carousels with text overlay (use carousel-capabilities)",
+      "static side-by-side content (use columns-positioning)",
+      "statistic grids (use cards-stats)",
+      "feature cards with descriptions (use cards-feature)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/about-us/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-06-18T00:00:00.000Z"
+  }
+}

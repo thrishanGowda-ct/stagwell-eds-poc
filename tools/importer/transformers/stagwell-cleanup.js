@@ -12,7 +12,9 @@
  *   importantly the slick carousel's duplicated `.slick-cloned` slides (the slider
  *   clones the first/last cards for its infinite loop; if left in place the
  *   carousel parser would emit duplicate cards). Also strips decorative slider
- *   chrome (nav arrows, slide counter) that is not authorable content.
+ *   chrome (nav arrows, slide counter) that is not authorable content — this
+ *   includes both the capabilities carousel chrome and the executive-leadership
+ *   people-slider chrome (About Us page).
  * afterTransform: removes non-authorable site shell (header, footer, nav,
  *   React portal), embedded form iframes and other safe-to-drop elements, then
  *   cleans leftover attributes.
@@ -33,6 +35,21 @@ export default function transform(hookName, element, payload) {
       '.stagwell-main-slider__arrow',
       '.stagwell-main-slider__numbering',
       '.stagwell-main-slider__details',
+    ]);
+
+    // Executive-leadership people-slider chrome (About Us page, .et_pb_section_3).
+    // Verified in cleaned.html:
+    //   <div class="stw-people-slider-controls"> (line 677) wrapping
+    //     <button class="stw-button-arrow-left"> / <button class="stw-button-arrow-right">
+    //     (lines 678,681) — decorative base64-SVG nav arrows, not authorable.
+    //   <div class="stw-people-slider-count-container"> (line 253) — empty slide
+    //     counter populated client-side; produces empty noise if left in.
+    // The carousel-leadership parser only needs .stw_featured_person and the
+    // .stw-people-slider-item cards (photo + name + position + bio link), so
+    // removing this chrome does not strip any leadership content.
+    WebImporter.DOMUtils.remove(element, [
+      '.stw-people-slider-controls',
+      '.stw-people-slider-count-container',
     ]);
   }
 
