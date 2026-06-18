@@ -124,26 +124,6 @@ function buildLanguageSwitcher() {
 }
 
 /**
- * Toggle the search modal visibility.
- */
-function toggleSearchModal() {
-  let searchModal = document.querySelector('.search-modal');
-  if (!searchModal) {
-    searchModal = buildSearchModal();
-    document.body.append(searchModal);
-  }
-  
-  const isActive = searchModal.classList.toggle('is-active');
-  if (isActive) {
-    const input = searchModal.querySelector('input');
-    if (input) input.focus();
-    document.body.style.overflowY = 'hidden'; // Prevent background scrolling
-  } else {
-    document.body.style.overflowY = '';
-  }
-}
-
-/**
  * Build the search modal overlay.
  * @returns {Element} the search modal container
  */
@@ -163,7 +143,7 @@ function buildSearchModal() {
       <div class="search-results" id="global-search-results"></div>
     </div>
   `;
-  
+
   modal.querySelector('.search-close').addEventListener('click', () => {
     modal.classList.remove('is-active');
     document.body.style.overflowY = '';
@@ -173,10 +153,30 @@ function buildSearchModal() {
   input.addEventListener('input', (e) => {
     const query = e.target.value;
     // TODO: Add your Algolia search logic here
-    console.log("Searching for:", query); 
+    return query;
   });
 
   return modal;
+}
+
+/**
+ * Toggle the search modal visibility.
+ */
+function toggleSearchModal() {
+  let searchModal = document.querySelector('.search-modal');
+  if (!searchModal) {
+    searchModal = buildSearchModal();
+    document.body.append(searchModal);
+  }
+
+  const isActive = searchModal.classList.toggle('is-active');
+  if (isActive) {
+    const input = searchModal.querySelector('input');
+    if (input) input.focus();
+    document.body.style.overflowY = 'hidden'; // Prevent background scrolling
+  } else {
+    document.body.style.overflowY = '';
+  }
 }
 
 /**
@@ -191,7 +191,7 @@ function buildSearchTrigger() {
   toggle.type = 'button';
   toggle.className = 'nav-search-toggle';
   toggle.setAttribute('aria-label', 'Open search');
-  
+
   // Inline SVG matching the styling of the globe icon
   toggle.innerHTML = `<svg class="nav-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/>
@@ -413,4 +413,3 @@ export default async function decorate(block) {
   navWrapper.append(overlay);
   block.append(navWrapper);
 }
-
