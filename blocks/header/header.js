@@ -10,7 +10,6 @@ const LANGUAGES = [
   { code: 'en', label: 'English' },
   { code: 'de', label: 'German' },
   { code: 'fr', label: 'French' },
-  { code: 'hi', label: 'Hindi' },
 ];
 const DEFAULT_LANGUAGE = 'en';
 
@@ -31,7 +30,9 @@ function getCurrentLanguage() {
  * @returns {string} the rewritten pathname
  */
 function buildLanguageHref(code) {
-  const segments = window.location.pathname.split('/').filter(Boolean);
+  const { pathname } = window.location;
+  const hadTrailingSlash = pathname.length > 1 && pathname.endsWith('/');
+  const segments = pathname.split('/').filter(Boolean);
   const localeIndex = segments.findIndex((s) => LANGUAGES.some((l) => l.code === s));
   if (localeIndex >= 0) {
     segments[localeIndex] = code;
@@ -39,7 +40,10 @@ function buildLanguageHref(code) {
     const contentIndex = segments.indexOf('content');
     segments.splice(contentIndex >= 0 ? contentIndex + 1 : 0, 0, code);
   }
-  return `/${segments.join('/')}`;
+  // preserve a trailing slash so language-root paths (e.g. /de/) don't 404
+  const isLocaleRoot = segments[segments.length - 1] === code;
+  const trailing = (hadTrailingSlash || isLocaleRoot) ? '/' : '';
+  return `/${segments.join('/')}${trailing}`;
 }
 
 /**
