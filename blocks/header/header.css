@@ -52,6 +52,94 @@ header nav .nav-brand img {
   width: 155px;
 }
 
+/* language switcher (globe icon + dropdown) */
+header nav .nav-language {
+  grid-area: brand;
+  position: relative;
+  justify-self: end;
+  margin-right: 12px;
+}
+
+header nav .nav-language-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 6px;
+  border: 1px solid rgb(0 51 73 / 25%);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text-color, #003349);
+  cursor: pointer;
+}
+
+header nav .nav-language.is-open .nav-language-toggle {
+  border-color: var(--color-accent, #009cbd);
+}
+
+header nav .nav-language-globe {
+  width: 22px;
+  height: 22px;
+}
+
+header nav .nav-language-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 150px;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid rgb(0 51 73 / 12%);
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgb(0 51 73 / 18%);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  z-index: 32;
+}
+
+header nav .nav-language.is-open .nav-language-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+header nav .nav-language-option {
+  display: block;
+  padding: 9px 18px 9px 34px;
+  position: relative;
+  color: var(--text-color, #003349);
+  font-size: 15px;
+  font-weight: 400;
+  text-transform: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+header nav .nav-language-option:hover {
+  background: var(--light-color, #f4f6f7);
+}
+
+header nav .nav-language-option.is-current {
+  font-weight: 600;
+}
+
+header nav .nav-language-option.is-current::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  width: 6px;
+  height: 11px;
+  border: solid var(--color-accent, #009cbd);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-60%) rotate(45deg);
+}
+
 /* hamburger (mobile only) */
 header nav .nav-hamburger {
   grid-area: hamburger;
@@ -181,6 +269,21 @@ header .nav-overlay.is-visible {
     height: var(--nav-height, 70px);
     display: flex;
     align-items: center;
+  }
+
+  /* globe switcher sits just left of the brand logo */
+  header nav .nav-language {
+    position: absolute;
+    top: 0;
+    right: 232px;
+    height: var(--nav-height, 70px);
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+  }
+
+  header nav .nav-language-menu {
+    top: calc(50% + 19px);
   }
 
   header nav .nav-brand img {
