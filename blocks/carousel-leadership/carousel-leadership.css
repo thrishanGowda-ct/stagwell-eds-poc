@@ -1,0 +1,245 @@
+/*
+ * carousel-leadership
+ * Source: stagwellglobal.com/about-us "Our Executive Leadership".
+ * Two instances:
+ *   - featured single card  -> large portrait + uppercase pull-quote
+ *   - people slider          -> uniform square B&W cards, 5 across on desktop
+ */
+
+.carousel-leadership {
+  position: relative;
+}
+
+/* ---------- shared track ---------- */
+.carousel-leadership .carousel-leadership-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: auto hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-leadership .carousel-leadership-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-leadership .carousel-leadership-card {
+  scroll-snap-align: start;
+  flex: 0 0 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel-leadership .carousel-leadership-card-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+/* ---------- portrait image (square, B&W) ---------- */
+.carousel-leadership .carousel-leadership-card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: var(--light-color);
+}
+
+.carousel-leadership .carousel-leadership-card-image picture,
+.carousel-leadership .carousel-leadership-card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+}
+
+/* ---------- people card text ---------- */
+.carousel-leadership .carousel-leadership-card-body {
+  padding: 10px 0 0;
+}
+
+.carousel-leadership .carousel-leadership-card-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel-leadership .carousel-leadership-card-name {
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.15px;
+  color: var(--text-color);
+}
+
+.carousel-leadership .carousel-leadership-card-title {
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.15px;
+  color: var(--text-color);
+}
+
+.carousel-leadership .carousel-leadership-card-link:hover .carousel-leadership-card-name {
+  text-decoration: underline;
+}
+
+/* ---------- featured card (pull-quote) ---------- */
+.carousel-leadership .carousel-leadership-card-featured {
+  flex: 0 0 100%;
+}
+
+.carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-link,
+.carousel-leadership .carousel-leadership-card-featured {
+  flex-direction: column;
+}
+
+.carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-image {
+  aspect-ratio: 3 / 2;
+}
+
+.carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-image img {
+  filter: grayscale(100%);
+}
+
+.carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 0 0;
+}
+
+.carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-quote {
+  position: relative;
+  margin: 0 0 32px;
+  padding-top: 40px;
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 2.88px;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+/* gold opening quotation mark above the pull-quote */
+.carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-quote::before {
+  content: '\201C';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  font-family: var(--display-font-family);
+  font-size: 64px;
+  line-height: 1;
+  color: var(--color-accent-gold);
+}
+
+.carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-meta {
+  padding-left: 16px;
+  border-left: 1px solid var(--text-color);
+}
+
+.carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-meta .carousel-leadership-card-name {
+  font-weight: 600;
+}
+
+/* ---------- navigation buttons ---------- */
+.carousel-leadership .carousel-leadership-navigation-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 40px;
+}
+
+.carousel-leadership .carousel-leadership-navigation-buttons button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--text-color);
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.carousel-leadership .carousel-leadership-navigation-buttons button:hover,
+.carousel-leadership .carousel-leadership-navigation-buttons button:focus-visible {
+  background-color: var(--text-color);
+  color: var(--background-color);
+}
+
+.carousel-leadership .carousel-leadership-navigation-buttons button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid currentcolor;
+  border-bottom: 0;
+  border-left: 0;
+}
+
+.carousel-leadership .carousel-leadership-navigation-buttons button.slide-prev::after {
+  left: calc(50% + 2px);
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.carousel-leadership .carousel-leadership-navigation-buttons button.slide-next::after {
+  left: calc(50% - 2px);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* ---------- responsive ---------- */
+@media (width >= 600px) {
+  .carousel-leadership .carousel-leadership-card {
+    flex: 0 0 calc((100% - 20px) / 2);
+  }
+}
+
+@media (width >= 900px) {
+  .carousel-leadership .carousel-leadership-track {
+    gap: 20px;
+  }
+
+  /* people slider: ~5 cards visible */
+  .carousel-leadership .carousel-leadership-card {
+    flex: 0 0 calc((100% - 80px) / 5);
+  }
+
+  /* featured: two columns - large portrait + pull-quote */
+  .carousel-leadership .carousel-leadership-card-featured {
+    flex: 0 0 100%;
+  }
+
+  .carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-link {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 60px;
+  }
+
+  .carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-image {
+    flex: 0 0 58%;
+    aspect-ratio: 3 / 2;
+  }
+
+  .carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-body {
+    flex: 1 1 auto;
+    padding: 0;
+  }
+
+  .carousel-leadership .carousel-leadership-card-featured .carousel-leadership-card-quote {
+    font-size: 24px;
+    margin-bottom: 0;
+  }
+}
