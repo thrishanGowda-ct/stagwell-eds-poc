@@ -2,10 +2,14 @@
  * Source: https://www.stagwellglobal.com/ (.et_pb_row_2)
  * Values extracted from source computed styles. */
 
-/* Wider 170px gutter for this section (overrides the global 90px) */
+/* Wider 170px gutter for homepage positioning only (not About Us our-story) */
 @media (width >= 900px) {
-  main > .section.columns-positioning-container > div {
+  main > .section.columns-positioning-container:not(:has(.columns-positioning-media)) > div {
     padding: 0 170px;
+  }
+
+  main > .section.columns-positioning-container:has(.columns-positioning-media) > div {
+    padding: 0 90px;
   }
 }
 
@@ -74,15 +78,15 @@
   flex-shrink: 0;
 }
 
-/* Desktop: two-column layout — heading left, description + CTA right */
+/* Desktop: homepage two-column layout — heading left, description + CTA right */
 @media (width >= 900px) {
-  .columns-positioning > div {
+  .columns-positioning:not(.columns-positioning-media) > div {
     flex-direction: row;
     gap: 20px;
     align-items: flex-start;
   }
 
-  .columns-positioning > div > div:nth-child(1) {
+  .columns-positioning:not(.columns-positioning-media) > div > div:nth-child(1) {
     flex: 0 0 63%;
   }
 
@@ -92,7 +96,97 @@
     max-width: 320px;
   }
 
-  .columns-positioning h2 {
+  .columns-positioning:not(.columns-positioning-media) h2 {
     font-size: 50px;
+  }
+}
+
+/* About Us (/en/about-us): "Our Story" text + image — source .et_pb_section_1 */
+.columns-positioning-media > div {
+  gap: 2.5rem;
+}
+
+.columns-positioning-media .columns-positioning-media-text h2 {
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.columns-positioning-story-accent {
+  font-family: var(--display-font-family);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--color-accent);
+}
+
+.columns-positioning-media .columns-positioning-media-image picture,
+.columns-positioning-media .columns-positioning-media-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (width >= 900px) {
+  .columns-positioning-media > div {
+    flex-direction: row;
+    gap: 6rem;
+  }
+
+  .columns-positioning-media .columns-positioning-media-text {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .columns-positioning-media .columns-positioning-media-image {
+    flex: 0 0 55%;
+    min-width: 0;
+  }
+
+  .columns-positioning-media .columns-positioning-media-text h2 {
+    font-size: 56px;
+    margin-bottom: 3rem;
+  }
+
+  .columns-positioning-story-accent {
+    font-size: 62px;
+    line-height: 0.95;
+  }
+}
+
+/* About Us (/en/about-us): "Our Impact" image left + text right */
+@media (width >= 900px) {
+  main > .section:has(.columns-positioning-media-left) > div {
+    padding-inline: 90px;
+  }
+}
+
+.columns-positioning-media-left > div {
+  gap: 2.5rem;
+}
+
+@media (width >= 900px) {
+  .columns-positioning-media-left > div {
+    flex-direction: row;
+    align-items: center;
+    gap: 6rem;
+  }
+
+  .columns-positioning-media-left .columns-positioning-media-image {
+    flex: 0 0 55%;
+    min-width: 0;
+  }
+
+  .columns-positioning-media-left .columns-positioning-media-text {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .columns-positioning-media-left .columns-positioning-media-text h2 {
+    font-size: 56px;
+    margin-bottom: 3rem;
   }
 }
