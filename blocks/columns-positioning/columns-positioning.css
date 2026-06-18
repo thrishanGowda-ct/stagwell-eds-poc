@@ -25,12 +25,12 @@
   color: var(--text-color);
 }
 
-/* Column 2: "Effective" -- italic Spectral display serif, accent teal */
-.columns-positioning > div > div:nth-child(2) h2 {
+/* "Effective" rendered inline inside col1's h2 */
+.columns-positioning-effective {
+  display: inline;
   font-family: var(--display-font-family);
   font-weight: 300;
   font-style: italic;
-  line-height: 1;
   color: var(--color-accent);
 }
 
@@ -67,12 +67,14 @@
 }
 
 .columns-positioning a img {
-  width: 24px;
-  height: 24px;
-  margin-left: 15px;
+  width: 28px;
+  height: 28px;
+  margin-left: 12px;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 
-/* Desktop: three columns side by side */
+/* Desktop: two-column layout — heading left, description + CTA right */
 @media (width >= 900px) {
   .columns-positioning > div {
     flex-direction: row;
@@ -81,16 +83,13 @@
   }
 
   .columns-positioning > div > div:nth-child(1) {
-    flex: 0 0 28%;
+    flex: 0 0 63%;
   }
 
-  .columns-positioning > div > div:nth-child(2) {
+  .columns-positioning .columns-positioning-cta-col {
     flex: 1 1 0;
-  }
-
-  .columns-positioning > div > div:nth-child(3) {
-    flex: 1 0 30%;
-    padding-left: clamp(40px, 12vw, 160px);
+    padding-left: clamp(40px, 5vw, 80px);
+    max-width: 320px;
   }
 
   .columns-positioning h2 {

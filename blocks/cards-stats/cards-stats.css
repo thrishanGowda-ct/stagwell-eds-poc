@@ -234,7 +234,6 @@ main .section.dark.has-cards-stats-intro .default-content-wrapper a:hover {
   main .section.has-cards-stats-intro .default-content-wrapper {
     /* outer edge aligns to the global 90px gutter */
     padding: 80px 48px 80px 90px;
-    border-right: 1px solid rgb(0 51 73 / 12%);
   }
 
   /* main .section.dark.has-cards-stats-intro .default-content-wrapper {
