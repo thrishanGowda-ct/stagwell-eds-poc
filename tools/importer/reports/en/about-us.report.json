@@ -1,0 +1,20 @@
+{
+  "status": "success",
+  "url": "https://www.stagwellglobal.com/about-us/",
+  "path": "en/about-us",
+  "timestamp": "2026-06-18T11:04:24.921Z",
+  "title": "Stagwell | About Us - Stagwell",
+  "template": "about-page",
+  "blocks": [
+    "hero-intro",
+    "columns-positioning",
+    "columns-positioning",
+    "carousel-leadership",
+    "carousel-leadership",
+    "carousel-leadership",
+    "carousel-leadership",
+    "carousel-capabilities",
+    "cards-stats",
+    "form"
+  ]
+}

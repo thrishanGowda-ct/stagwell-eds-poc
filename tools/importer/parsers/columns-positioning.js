@@ -17,20 +17,27 @@ export default function parse(element, { document }) {
   // Direct child columns of the row (validated against source.html: .et_pb_column_3/_4/_5)
   const columns = Array.from(element.querySelectorAll(':scope > .et_pb_column'));
 
-  // Build one cell per column. Each cell collects the column's text content
-  // (headings/paragraphs) and any CTA link(s) within that column.
+  // Build one cell per column. Each cell collects the column's image (if any),
+  // text content (headings/paragraphs) and any CTA link(s) within that column.
   const rowCells = columns.map((column) => {
     const cellContent = [];
+
+    // Image module(s): an image-only column (e.g. Our Story / Our Impact) has
+    // no text modules, just a picture/img. Include it so the column renders.
+    const img = column.querySelector('.et_pb_image img, picture img, img');
 
     // Text modules: headings and paragraphs (et_pb_text inner content)
     const textNodes = Array.from(
       column.querySelectorAll('.et_pb_text_inner > *, .et_pb_text_inner'),
     ).filter((node) => node.matches('h1, h2, h3, h4, h5, h6, p'));
 
-    // Fallback: if no specific heading/paragraph nodes were found, take the inner wrapper.
     if (textNodes.length) {
       cellContent.push(...textNodes);
+    } else if (img) {
+      // Image-only column: use the image as the cell content.
+      cellContent.push(img);
     } else {
+      // Fallback: if no specific heading/paragraph nodes were found, take the inner wrapper.
       const inner = column.querySelector('.et_pb_text_inner');
       if (inner) cellContent.push(inner);
     }

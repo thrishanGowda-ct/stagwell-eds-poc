@@ -4,6 +4,125 @@ import { loadFragment } from '../fragment/fragment.js';
 // media query match that indicates desktop width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
+// supported locales, derived from the /content/{locale}/ folder structure.
+// `code` is the folder name; `label` is the author-friendly dropdown text.
+const LANGUAGES = [
+  { code: 'en', label: 'English' },
+  { code: 'de', label: 'German' },
+  { code: 'fr', label: 'French' },
+];
+const DEFAULT_LANGUAGE = 'en';
+
+/**
+ * Detect the active locale from the current path (e.g. /content/de/index → de).
+ * @returns {string} the active locale code, defaulting to English
+ */
+function getCurrentLanguage() {
+  const segments = window.location.pathname.split('/').filter(Boolean);
+  const match = segments.find((s) => LANGUAGES.some((l) => l.code === s));
+  return match || DEFAULT_LANGUAGE;
+}
+
+/**
+ * Resolve the path prefix up to and including the active locale segment, derived
+ * from the current URL so it works both locally (/content/de/index → /content/de)
+ * and on the published site (/de/ → /de).
+ * @returns {string} the locale base path, or '' when no locale is present
+ */
+function getLocaleBasePath() {
+  const segments = window.location.pathname.split('/').filter(Boolean);
+  const localeIndex = segments.findIndex((s) => LANGUAGES.some((l) => l.code === s));
+  if (localeIndex < 0) return '';
+  return `/${segments.slice(0, localeIndex + 1).join('/')}`;
+}
+
+/**
+ * Build the path for the same page under a different locale. Swaps an existing
+ * locale segment in place, or inserts one after `content` when none is present.
+ * @param {string} code The target locale code
+ * @returns {string} the rewritten pathname
+ */
+function buildLanguageHref(code) {
+  const { pathname } = window.location;
+  const hadTrailingSlash = pathname.length > 1 && pathname.endsWith('/');
+  const segments = pathname.split('/').filter(Boolean);
+  const localeIndex = segments.findIndex((s) => LANGUAGES.some((l) => l.code === s));
+  if (localeIndex >= 0) {
+    segments[localeIndex] = code;
+  } else {
+    const contentIndex = segments.indexOf('content');
+    segments.splice(contentIndex >= 0 ? contentIndex + 1 : 0, 0, code);
+  }
+  // preserve a trailing slash so language-root paths (e.g. /de/) don't 404
+  const isLocaleRoot = segments[segments.length - 1] === code;
+  const trailing = (hadTrailingSlash || isLocaleRoot) ? '/' : '';
+  return `/${segments.join('/')}${trailing}`;
+}
+
+/**
+ * Build the globe-icon language switcher and wire up open/close + selection.
+ * @returns {Element} the language-switcher container
+ */
+function buildLanguageSwitcher() {
+  const current = getCurrentLanguage();
+  const container = document.createElement('div');
+  container.className = 'nav-language';
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'nav-language-toggle';
+  toggle.setAttribute('aria-haspopup', 'true');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-label', 'Select language');
+  toggle.innerHTML = `<svg class="nav-language-globe" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <ellipse cx="12" cy="12" rx="4" ry="9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="1.6"/>
+      <line x1="4.2" y1="7.5" x2="19.8" y2="7.5" stroke="currentColor" stroke-width="1.6"/>
+      <line x1="4.2" y1="16.5" x2="19.8" y2="16.5" stroke="currentColor" stroke-width="1.6"/>
+    </svg>`;
+
+  const menu = document.createElement('ul');
+  menu.className = 'nav-language-menu';
+  menu.setAttribute('role', 'menu');
+  LANGUAGES.forEach(({ code, label }) => {
+    const item = document.createElement('li');
+    const link = document.createElement('a');
+    link.className = 'nav-language-option';
+    link.setAttribute('role', 'menuitemradio');
+    link.href = buildLanguageHref(code);
+    link.lang = code;
+    link.textContent = label;
+    if (code === current) {
+      link.classList.add('is-current');
+      link.setAttribute('aria-checked', 'true');
+    } else {
+      link.setAttribute('aria-checked', 'false');
+    }
+    item.append(link);
+    menu.append(item);
+  });
+
+  const close = () => {
+    container.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = container.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', (e) => {
+    if (!container.contains(e.target)) close();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') close();
+  });
+
+  container.append(toggle, menu);
+  return container;
+}
+
 /**
  * Collapse every open nav dropdown and hide the overlay.
  * @param {Element} navSections The nav sections container
@@ -55,11 +174,13 @@ function toggleMenu(nav, navSections, overlay, forceExpanded = null) {
  * @param {Element} block The header block element
  */
 export default async function decorate(block) {
-  // load nav as fragment — try the configured/local path, then the published root path
+  // load nav as fragment — prefer the active locale's nav, then fall back to
+  // the configured/local path and the published root path
   const navMeta = getMetadata('nav');
+  const localeBase = getLocaleBasePath();
   const candidatePaths = navMeta
     ? [new URL(navMeta, window.location).pathname]
-    : ['/content/nav', '/nav'];
+    : [localeBase && `${localeBase}/nav`, '/content/nav', '/nav'].filter(Boolean);
   let fragment = null;
   for (let i = 0; i < candidatePaths.length && !fragment; i += 1) {
     // eslint-disable-next-line no-await-in-loop
@@ -192,6 +313,11 @@ export default async function decorate(block) {
     toggleMenu(nav, navSections, overlay, isDesktop.matches);
     document.body.style.overflowY = '';
   });
+
+  // globe language switcher, placed beside the brand logo
+  const languageSwitcher = buildLanguageSwitcher();
+  if (navBrand) navBrand.before(languageSwitcher);
+  else nav.append(languageSwitcher);
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
