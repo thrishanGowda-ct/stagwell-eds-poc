@@ -349,6 +349,11 @@ main .section.dark h6 {
   color: #fff;
 }
 
+/* "Investing in Stagwell" intro paragraph above the cards-stats block */
+main .section.dark:has(.cards-stats-wrapper) .default-content-wrapper p:first-of-type {
+  margin-top: 140px;
+}
+
 main .section.accent {
   background-color: var(--color-accent);
   color: #fff;
@@ -363,4 +368,22 @@ main .section.accent h4,
 main .section.accent h5,
 main .section.accent h6 {
   color: #fff;
+}
+
+/* "Latest / News" two-tone heading pair on the home page */
+main #latest {
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 56px;
+  color: var(--text-color);
+  margin-bottom: 0;
+}
+
+main #news {
+  font-family: var(--display-font-family);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 62px;
+  color: var(--link-hover-color);
+  margin-top: 0;
 }
