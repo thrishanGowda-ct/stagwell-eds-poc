@@ -4,7 +4,7 @@
 
 /* Section background: white top → light grey bottom */
 main > .section.cards-feature-container {
-  background-image: linear-gradient(180deg, #ffffff 65%, #f5f7f6 65%) !important;
+  background-image: linear-gradient(180deg, #fff 65%, #f5f7f6 65%) !important;
 }
 
 /* Wider 170px gutter for this section (overrides the global 90px) */
