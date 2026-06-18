@@ -24,6 +24,19 @@ function getCurrentLanguage() {
 }
 
 /**
+ * Resolve the path prefix up to and including the active locale segment, derived
+ * from the current URL so it works both locally (/content/de/index → /content/de)
+ * and on the published site (/de/ → /de).
+ * @returns {string} the locale base path, or '' when no locale is present
+ */
+function getLocaleBasePath() {
+  const segments = window.location.pathname.split('/').filter(Boolean);
+  const localeIndex = segments.findIndex((s) => LANGUAGES.some((l) => l.code === s));
+  if (localeIndex < 0) return '';
+  return `/${segments.slice(0, localeIndex + 1).join('/')}`;
+}
+
+/**
  * Build the path for the same page under a different locale. Swaps an existing
  * locale segment in place, or inserts one after `content` when none is present.
  * @param {string} code The target locale code
@@ -164,10 +177,10 @@ export default async function decorate(block) {
   // load nav as fragment — prefer the active locale's nav, then fall back to
   // the configured/local path and the published root path
   const navMeta = getMetadata('nav');
-  const locale = getCurrentLanguage();
+  const localeBase = getLocaleBasePath();
   const candidatePaths = navMeta
     ? [new URL(navMeta, window.location).pathname]
-    : [`/content/${locale}/nav`, '/content/nav', '/nav'];
+    : [localeBase && `${localeBase}/nav`, '/content/nav', '/nav'].filter(Boolean);
   let fragment = null;
   for (let i = 0; i < candidatePaths.length && !fragment; i += 1) {
     // eslint-disable-next-line no-await-in-loop
