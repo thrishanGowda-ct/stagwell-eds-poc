@@ -168,8 +168,7 @@ main > .section.contact-section.light {
 @media (width >= 900px) {
   .contact-layout {
     grid-template-columns: 55fr 22.5fr 22.5fr;
-    column-gap: 6rem;
-    row-gap: 3rem;
+    gap: 3rem 6rem;
   }
 
   .contact-heading {
