@@ -376,7 +376,7 @@ main #latest {
   font-weight: 500;
   font-size: 56px;
   color: var(--text-color);
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 main #news {
@@ -385,5 +385,5 @@ main #news {
   font-style: italic;
   font-size: 62px;
   color: var(--link-hover-color);
-  margin-top: 0px;
+  margin-top: 0;
 }
