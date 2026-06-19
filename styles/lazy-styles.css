@@ -622,6 +622,5 @@ main > .section.accent.ar-newsletter-section:has(.form) .ar-newsletter-bg {
     height: auto;
     display: block;
     opacity: 0.55;
-    margin: 30rem 0px 1px 5rem;
   }
 }
