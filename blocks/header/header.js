@@ -1,6 +1,7 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
+import algoliasearch from 'https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.esm.browser.js';
 // media query match that indicates desktop width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
@@ -124,7 +125,7 @@ function buildLanguageSwitcher() {
 }
 
 /**
- * Build the search modal overlay.
+ * Build the search modal overlay and hook up Algolia search with Facets.
  * @returns {Element} the search modal container
  */
 function buildSearchModal() {
@@ -140,20 +141,118 @@ function buildSearchModal() {
         </svg>
         <input type="text" id="global-search-input" placeholder="Search Stagwell..." autocomplete="off" />
       </div>
+      <div class="search-facets-wrapper" id="global-search-facets"></div>
+
       <div class="search-results" id="global-search-results"></div>
     </div>
   `;
 
+  const input = modal.querySelector('#global-search-input');
+  const resultsContainer = modal.querySelector('#global-search-results');
+  const facetsContainer = modal.querySelector('#global-search-facets');
+
+  // State to track which category is currently selected
+  let activeCategory = '';
+
+  // Close modal and clear everything
   modal.querySelector('.search-close').addEventListener('click', () => {
     modal.classList.remove('is-active');
     document.body.style.overflowY = '';
+    input.value = '';
+    resultsContainer.innerHTML = '';
+    facetsContainer.innerHTML = '';
+    activeCategory = '';
   });
 
-  const input = modal.querySelector('#global-search-input');
-  input.addEventListener('input', (e) => {
-    const query = e.target.value;
-    // TODO: Add your Algolia search logic here
-    return query;
+  // Initialize Algolia
+  const client = algoliasearch('EX4T3T2OE1', '89ac8a6eaa175d2683eb6c95c1808ba2');
+  const index = client.initIndex('stagwell-index');
+
+  // The core search function (so we can call it when typing OR clicking a facet)
+  const performSearch = async () => {
+    const query = input.value;
+
+    if (query.trim().length < 2 && !activeCategory) {
+      resultsContainer.innerHTML = '';
+      facetsContainer.innerHTML = '';
+      return;
+    }
+
+    try {
+      // Build the search parameters
+      const searchParams = {
+        hitsPerPage: 5,
+        facets: ['category'], // Tell Algolia to return categories
+      };
+
+      // If a category is selected, apply the filter!
+      if (activeCategory) {
+        searchParams.facetFilters = [[`category:${activeCategory}`]];
+      }
+
+      const { hits, facets } = await index.search(query, searchParams);
+
+      // --- 1. RENDER FACETS ---
+      const categoryFacets = facets?.category || {};
+      let facetsHTML = '';
+
+      // Only show facets if there are any available for this query
+      if (Object.keys(categoryFacets).length > 0) {
+        facetsHTML = Object.entries(categoryFacets).map(([categoryName, count]) => {
+          const isSelected = activeCategory === categoryName ? 'is-selected' : '';
+          return `<button class="facet-pill ${isSelected}" data-category="${categoryName}">
+                    ${categoryName} <span class="facet-count">(${count})</span>
+                  </button>`;
+        }).join('');
+      }
+
+      // Add a "Clear" button if a category is currently active
+      if (activeCategory) {
+        facetsHTML = `<button class="facet-pill clear-facet" data-category="">&times; Clear Filter</button>` + facetsHTML;
+      }
+
+      facetsContainer.innerHTML = facetsHTML;
+
+      // --- 2. RENDER HITS ---
+      if (hits.length === 0) {
+        resultsContainer.innerHTML = `<p class="no-results">No results found.</p>`;
+        return;
+      }
+
+      const resultsHTML = hits.map((hit) => {
+        const title = hit._highlightResult?.title?.value || hit.title || hit.path;
+        const description = hit.description || '';
+
+        return `
+          <a href="${hit.path}" class="search-result-item">
+            <h4 class="search-result-title">${title}</h4>
+            <p class="search-result-desc">${description}</p>
+          </a>
+        `;
+      }).join('');
+
+      resultsContainer.innerHTML = resultsHTML;
+
+    } catch (error) {
+      console.error('Algolia Search Error:', error);
+      resultsContainer.innerHTML = `<p class="error-results">Search is currently unavailable.</p>`;
+    }
+  };
+
+  // Listen for typing events
+  input.addEventListener('input', performSearch);
+
+  // Listen for Facet Clicks (Event Delegation)
+  facetsContainer.addEventListener('click', (e) => {
+    const clickedPill = e.target.closest('.facet-pill');
+    if (!clickedPill) return;
+
+    // Update the state with the clicked category (or clear it)
+    activeCategory = clickedPill.getAttribute('data-category');
+
+    // Re-run the search with the new filter applied
+    performSearch();
+    input.focus(); // Keep the user's cursor in the box
   });
 
   return modal;
@@ -178,7 +277,6 @@ function toggleSearchModal() {
     document.body.style.overflowY = '';
   }
 }
-
 /**
  * Build the search icon trigger.
  * @returns {Element} the search trigger container

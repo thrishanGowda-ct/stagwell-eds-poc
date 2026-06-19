@@ -412,7 +412,7 @@ header .nav-overlay.is-visible {
 }
 
 /* =========================================================
-   SEARCH TRIGGER AND MODAL STYLES 
+   SEARCH TRIGGER AND MODAL STYLES
    ========================================================= */
 
 /* --- Mobile Search Trigger Positioning --- */
@@ -422,7 +422,7 @@ header nav .nav-search {
   justify-self: end;
 
   /* Push it to the left of the language switcher (38px width + 12px margin + 10px gap) */
-  margin-right: 60px; 
+  margin-right: 60px;
   display: flex;
   align-items: center;
 }
@@ -434,7 +434,7 @@ header nav .nav-search-toggle {
   width: 38px;
   height: 38px;
   padding: 6px;
-  border: 1px solid rgb(0 51 73 / 25%);
+  border: 0 solid rgb(0 51 73 / 25%);
   border-radius: 6px;
   background: #fff;
   color: var(--text-color, #003349);
@@ -522,7 +522,7 @@ header nav .nav-search-icon {
     top: 0;
 
     /* 232px (globe right pos) + 38px (globe width) + 12px (gap) = 282px */
-    right: 282px; 
+    right: 282px;
     height: var(--nav-height, 70px);
     margin-right: 0;
   }
