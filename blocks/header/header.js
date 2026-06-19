@@ -1,7 +1,6 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-import algoliasearch from 'https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.esm.browser.js';
 // media query match that indicates desktop width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
@@ -128,7 +127,7 @@ function buildLanguageSwitcher() {
  * Build the search modal overlay and hook up Algolia search with Facets.
  * @returns {Element} the search modal container
  */
-function buildSearchModal() {
+async function buildSearchModal() {
   const modal = document.createElement('div');
   modal.className = 'search-modal';
   modal.innerHTML = `
@@ -165,6 +164,8 @@ function buildSearchModal() {
   });
 
   // Initialize Algolia
+  // eslint-disable-next-line import/no-unresolved
+  const { default: algoliasearch } = await import('https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.esm.browser.js');
   const client = algoliasearch('EX4T3T2OE1', '89ac8a6eaa175d2683eb6c95c1808ba2');
   const index = client.initIndex('stagwell-index');
 
@@ -208,18 +209,19 @@ function buildSearchModal() {
 
       // Add a "Clear" button if a category is currently active
       if (activeCategory) {
-        facetsHTML = `<button class="facet-pill clear-facet" data-category="">&times; Clear Filter</button>` + facetsHTML;
+        facetsHTML = `<button class="facet-pill clear-facet" data-category="">&times; Clear Filter</button>${facetsHTML}`;
       }
 
       facetsContainer.innerHTML = facetsHTML;
 
       // --- 2. RENDER HITS ---
       if (hits.length === 0) {
-        resultsContainer.innerHTML = `<p class="no-results">No results found.</p>`;
+        resultsContainer.innerHTML = '<p class="no-results">No results found.</p>';
         return;
       }
 
       const resultsHTML = hits.map((hit) => {
+        // eslint-disable-next-line no-underscore-dangle
         const title = hit._highlightResult?.title?.value || hit.title || hit.path;
         const description = hit.description || '';
 
@@ -232,10 +234,10 @@ function buildSearchModal() {
       }).join('');
 
       resultsContainer.innerHTML = resultsHTML;
-
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Algolia Search Error:', error);
-      resultsContainer.innerHTML = `<p class="error-results">Search is currently unavailable.</p>`;
+      resultsContainer.innerHTML = '<p class="error-results">Search is currently unavailable.</p>';
     }
   };
 
@@ -261,10 +263,10 @@ function buildSearchModal() {
 /**
  * Toggle the search modal visibility.
  */
-function toggleSearchModal() {
+async function toggleSearchModal() {
   let searchModal = document.querySelector('.search-modal');
   if (!searchModal) {
-    searchModal = buildSearchModal();
+    searchModal = await buildSearchModal();
     document.body.append(searchModal);
   }
 
