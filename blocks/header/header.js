@@ -123,7 +123,7 @@ function buildLanguageSwitcher() {
   return container;
 }
 
-/**
+ /**
  * Build the search modal overlay and hook up Algolia search with Facets.
  * @returns {Element} the search modal container
  */
@@ -141,7 +141,6 @@ async function buildSearchModal() {
         <input type="text" id="global-search-input" placeholder="Search Stagwell..." autocomplete="off" />
       </div>
       <div class="search-facets-wrapper" id="global-search-facets"></div>
-
       <div class="search-results" id="global-search-results"></div>
     </div>
   `;
@@ -150,10 +149,8 @@ async function buildSearchModal() {
   const resultsContainer = modal.querySelector('#global-search-results');
   const facetsContainer = modal.querySelector('#global-search-facets');
 
-  // State to track which category is currently selected
   let activeCategory = '';
 
-  // Close modal and clear everything
   modal.querySelector('.search-close').addEventListener('click', () => {
     modal.classList.remove('is-active');
     document.body.style.overflowY = '';
@@ -163,15 +160,14 @@ async function buildSearchModal() {
     activeCategory = '';
   });
 
-  // Initialize Algolia
   // eslint-disable-next-line import/no-unresolved
   const { default: algoliasearch } = await import('https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.esm.browser.js');
   const client = algoliasearch('EX4T3T2OE1', '89ac8a6eaa175d2683eb6c95c1808ba2');
   const index = client.initIndex('stagwell-index');
 
-  // The core search function (so we can call it when typing OR clicking a facet)
   const performSearch = async () => {
     const query = input.value;
+    const currentLang = getCurrentLanguage(); // <-- Grabs the active language!
 
     if (query.trim().length < 2 && !activeCategory) {
       resultsContainer.innerHTML = '';
@@ -180,24 +176,24 @@ async function buildSearchModal() {
     }
 
     try {
-      // Build the search parameters
       const searchParams = {
         hitsPerPage: 5,
-        facets: ['category'], // Tell Algolia to return categories
+        facets: ['category'], 
+        facetFilters: [`language:${currentLang}`], // <-- Strict language filter applied
       };
 
-      // If a category is selected, apply the filter!
       if (activeCategory) {
-        searchParams.facetFilters = [[`category:${activeCategory}`]];
+        searchParams.facetFilters = [
+          `language:${currentLang}`,
+          `category:${activeCategory}`
+        ];
       }
 
       const { hits, facets } = await index.search(query, searchParams);
 
-      // --- 1. RENDER FACETS ---
       const categoryFacets = facets?.category || {};
       let facetsHTML = '';
 
-      // Only show facets if there are any available for this query
       if (Object.keys(categoryFacets).length > 0) {
         facetsHTML = Object.entries(categoryFacets).map(([categoryName, count]) => {
           const isSelected = activeCategory === categoryName ? 'is-selected' : '';
@@ -207,14 +203,12 @@ async function buildSearchModal() {
         }).join('');
       }
 
-      // Add a "Clear" button if a category is currently active
       if (activeCategory) {
         facetsHTML = `<button class="facet-pill clear-facet" data-category="">&times; Clear Filter</button>${facetsHTML}`;
       }
 
       facetsContainer.innerHTML = facetsHTML;
 
-      // --- 2. RENDER HITS ---
       if (hits.length === 0) {
         resultsContainer.innerHTML = '<p class="no-results">No results found.</p>';
         return;
@@ -224,7 +218,6 @@ async function buildSearchModal() {
         // eslint-disable-next-line no-underscore-dangle
         const title = hit._highlightResult?.title?.value || hit.title || hit.path;
         const description = hit.description || '';
-
         return `
           <a href="${hit.path}" class="search-result-item">
             <h4 class="search-result-title">${title}</h4>
@@ -241,25 +234,18 @@ async function buildSearchModal() {
     }
   };
 
-  // Listen for typing events
   input.addEventListener('input', performSearch);
 
-  // Listen for Facet Clicks (Event Delegation)
   facetsContainer.addEventListener('click', (e) => {
     const clickedPill = e.target.closest('.facet-pill');
     if (!clickedPill) return;
-
-    // Update the state with the clicked category (or clear it)
     activeCategory = clickedPill.getAttribute('data-category');
-
-    // Re-run the search with the new filter applied
     performSearch();
-    input.focus(); // Keep the user's cursor in the box
+    input.focus();
   });
 
   return modal;
 }
-
 /**
  * Toggle the search modal visibility.
  */
