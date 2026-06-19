@@ -67,12 +67,357 @@ main > .section.about-mission {
   }
 }
 
-/* About Us (/en/about-us): Contact Us — source #sw-contact-us */
+/* Augmented Reality (/en/augmented-reality) — source stagwellglobal.com/augmented-reality/ */
+
+main > .section.ar-hero-section,
+main > .section.ar-intro-section,
+main > .section.ar-quote-section,
+main > .section.ar-article-section {
+  margin: 0;
+}
+
+main > .section.ar-hero-section.light,
+main > .section.ar-intro-section.light,
+main > .section.ar-quote-section.light,
+main > .section.ar-article-section.light {
+  margin: 0;
+  background-color: #f5f7f6;
+}
+
+/* Section 1: hero title + label */
+main > .section.ar-hero-section {
+  background-color: #f5f7f6;
+  padding: 5rem 0 2rem;
+}
+
+main > .section.ar-hero-section > div {
+  max-width: 100%;
+  padding: 0 24px;
+}
+
+/* Section 2: intro copy offset right */
+main > .section.ar-intro-section {
+  background-color: #f5f7f6;
+  padding: 0 0 4rem;
+}
+
+main > .section.ar-intro-section > div {
+  padding: 0 24px;
+}
+
+/* Section 3: quote row — source .et_pb_testimonial_0 */
+main > .section.ar-quote-section {
+  background-color: #f5f7f6;
+  padding: 0 0 4rem;
+}
+
+main > .section.ar-quote-section > div {
+  padding: 0 24px;
+}
+
+main > .section.ar-quote-section .columns-positioning-ar > div {
+  gap: 2rem;
+  margin: 0;
+}
+
+main > .section.ar-quote-section .columns-positioning-ar-text h3 {
+  margin: 0 0 2.5rem;
+  font-family: var(--display-font-family);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 36px;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  color: var(--text-color);
+}
+
+main > .section.ar-quote-section .columns-positioning-ar-accent {
+  font-family: var(--heading-font-family);
+  font-style: italic;
+  font-weight: 700;
+  color: #009cbd;
+}
+
+main > .section.ar-quote-section .columns-positioning-ar-quote {
+  margin: 0 0 1.5rem;
+  padding: 0;
+  border: none;
+  font-family: var(--heading-font-family);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+main > .section.ar-quote-section .columns-positioning-ar-quote::before {
+  content: '';
+  display: block;
+  width: 5rem;
+  height: 3.65rem;
+  margin-bottom: 1.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 51 37'%3E%3Cpath fill='%23ffb81c' d='M0 37V16.5C0 7.4 7.4 0 16.5 0v8.2C12 8.2 8.2 12 8.2 16.5V20h8.3v17H0zm26 0V16.5C26 7.4 33.4 0 42.5 0v8.2c-4.5 0-8.3 3.8-8.3 8.3V20h8.3v17H26z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+}
+
+main > .section.ar-quote-section .columns-positioning-ar-quote strong {
+  font-weight: 700;
+}
+
+main > .section.ar-quote-section .columns-positioning-ar-cite {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+  color: var(--text-color);
+}
+
+main > .section.ar-quote-section .columns-positioning-ar-cite-name,
+main > .section.ar-quote-section .columns-positioning-ar-cite em {
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* AR hero block — scoped so homepage / About Us hero-intro rules never apply */
+main > .section.ar-hero-section .hero-intro-ar {
+  display: block;
+  padding: 2rem 0 0 5rem;
+  margin: 0;
+}
+
+main > .section.ar-hero-section .hero-intro-ar > div:last-child {
+  border: none;
+  padding-left: 0;
+  flex: none;
+}
+
+main > .section.ar-hero-section .hero-intro-ar-title {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 52px;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--text-color);
+}
+
+main > .section.ar-hero-section .hero-intro-ar-label {
+  margin: 1rem 0 0;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #009cbd;
+}
+
+/* Sections 4–6: AR article cards — source stagwellglobal.com/augmented-reality/ */
+main > .section.ar-article-section {
+  background-color: #f5f7f6;
+  padding: 0;
+}
+
+main > .section.ar-article-section.cards-feature-container {
+  background-color: #f5f7f6 !important;
+  background-image: none !important;
+}
+
+main > .section.ar-article-section:first-of-type {
+  padding-top: 3rem;
+}
+
+main > .section.ar-article-section:last-of-type {
+  padding-bottom: 4rem;
+}
+
+main > .section.ar-article-section .cards-feature-ar-article {
+  margin: 0;
+  padding: 0;
+}
+
+main > .section.ar-article-section .cards-feature-ar-article-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+main > .section.ar-article-section .cards-feature-ar-article-item {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 2.5rem 0;
+}
+
+main > .section.ar-article-section .cards-feature-ar-image {
+  margin: 0 0 1.5rem;
+  line-height: 0;
+}
+
+main > .section.ar-article-section .cards-feature-ar-image img {
+  width: 70%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  max-height: 320px;
+}
+
+main > .section.ar-article-section .cards-feature-ar-article .cards-feature-card-body {
+  padding: 0;
+}
+
+main > .section.ar-article-section .cards-feature-ar-title {
+  margin: 0 0 1rem;
+  font-family: var(--heading-font-family);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 2.88px;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+main > .section.ar-article-section .cards-feature-ar-cta {
+  margin-top: 1.875rem;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1.92px;
+  text-transform: uppercase;
+  color: #ffb81c;
+}
+
+@media (width >= 900px) {
+  main > .section.ar-hero-section {
+    padding: 7rem 0 2rem;
+  }
+
+  main > .section.ar-hero-section > div,
+  main > .section.ar-quote-section > div,
+  main > .section.ar-article-section > div {
+    padding-inline: 90px;
+  }
+
+  main > .section.ar-intro-section > div {
+    padding: 72px 0 0;
+  }
+
+  main > .section.ar-intro-section .ar-intro-content {
+    max-width: 52rem;
+    margin-left: 38%;
+  }
+
+  main > .section.ar-quote-section .columns-positioning-ar > div {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+
+  main > .section.ar-quote-section .columns-positioning-ar .columns-positioning-media-image {
+    flex: 0 0 calc(50% - 2rem);
+    min-width: 0;
+  }
+
+  main > .section.ar-quote-section .columns-positioning-ar-text {
+    flex: 0 0 calc(50% - 2rem);
+    min-width: 0;
+    padding: 0 3rem 0 0;
+  }
+
+  main > .section.ar-quote-section .columns-positioning-ar-text h3 {
+    font-size: 48px;
+    margin-bottom: 2.5rem;
+  }
+
+  main > .section.ar-quote-section .columns-positioning-ar-quote {
+    font-size: 24px;
+    line-height: 1.5;
+    letter-spacing: 0.12rem;
+  }
+
+  main > .section.ar-quote-section .columns-positioning-ar-quote::before {
+    width: 3.5rem;
+    height: 4rem;
+    margin-bottom: 2rem;
+  }
+
+  main > .section.ar-hero-section .hero-intro-ar-title {
+    font-size: 92px;
+  }
+
+  main > .section.ar-hero-section .hero-intro-ar-label {
+    margin-top: 0.7rem;
+    font-size: 2rem;
+  }
+
+  main > .section.ar-hero-section .hero-intro-ar > div:last-child {
+    border: none;
+    padding-left: 0;
+  }
+
+  main > .section.ar-intro-section {
+    padding-bottom: 6rem;
+  }
+
+  main > .section.ar-quote-section {
+    padding-bottom: 5rem;
+  }
+
+  main > .section.ar-article-section:first-of-type {
+    padding-top: 4rem;
+  }
+
+  main > .section.ar-article-section:last-of-type {
+    padding-bottom: 5rem;
+  }
+
+  main > .section.ar-article-section .cards-feature-ar-article-item {
+    flex-direction: row;
+    gap: 0;
+    padding: 1rem 0;
+  }
+
+  main > .section.ar-article-section .cards-feature-ar-image {
+    flex: 0 0 38%;
+    max-width: 38%;
+    margin: 0;
+  }
+
+  main > .section.ar-article-section .cards-feature-ar-image img {
+    max-height: none;
+  }
+
+  main > .section.ar-quote-section .columns-positioning-ar .columns-positioning-media-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  main > .section.ar-article-section .cards-feature-ar-article .cards-feature-card-body {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 39rem;
+  }
+
+  main > .section.ar-article-section .cards-feature-ar-title {
+    font-size: 24px;
+    margin-bottom: 1.25rem;
+    letter-spacing: 3px;
+  }
+}
+
+/* Contact Us — shared by About Us and Augmented Reality (#sw-contact-us) */
 
 main > .section.contact-section {
   background-color: #f5f7f6;
   margin: 0;
   padding: 5rem 0;
+  border-bottom: 8px solid #009cbd;
 }
 
 main > .section.contact-section.light {
@@ -163,6 +508,37 @@ main > .section.contact-section.light {
 
 .contact-column a:any-link:hover {
   color: var(--color-accent-gold);
+}
+
+main > .section.ar-intro-section .ar-intro-content > p {
+  margin: 0 0 1rem;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  color: var(--text-color);
+}
+
+main > .section.ar-quote-section .columns-positioning-ar-quote p {
+  margin: 0;
+  font-size: 20px;
+  max-width: 38rem;
+}
+
+main > .section.ar-article-section .cards-feature-ar-article .cards-feature-card-body p:not(.cards-feature-ar-cta) {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-color);
+}
+
+main > .section.ar-article-section .cards-feature-ar-cta a:any-link {
+  color: #ffb81c;
+  font-weight: 700;
+  text-decoration: none;
 }
 
 @media (width >= 900px) {

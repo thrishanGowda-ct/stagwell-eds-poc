@@ -31,6 +31,16 @@ export default function decorate(block) {
   const aboutHeading = block.querySelector('h1');
   if (aboutHeading) {
     const headingText = aboutHeading.textContent.replace(/\s+/g, ' ').trim();
+    if (/augmented\s+reality/i.test(headingText)) {
+      block.classList.add('hero-intro-ar');
+      aboutHeading.classList.add('hero-intro-ar-title');
+      const label = [...block.querySelectorAll('p')].find((p) => (
+        /marketing\s+frontiers/i.test(p.textContent)
+      ));
+      if (label) label.classList.add('hero-intro-ar-label');
+      return;
+    }
+
     const isAboutIntro = aboutHeading.querySelector('br')
       || /^about\s+stagwell$/i.test(headingText);
     if (isAboutIntro) {

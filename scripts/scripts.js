@@ -192,9 +192,183 @@ function decorateLeadershipSection(main) {
 }
 
 /**
- * Contact Us section: heading + intro row, three-column contact details.
+ * Augmented Reality page: split into Stagwell section structure and tag for styling.
+ *   1. Hero — title + label
+ *   2. Intro copy — body paragraphs (offset right on desktop)
+ *   3. Our AR Tech in Action — image + quote
+ *   4–6. Article cards — one cards-feature block per section
  * @param {Element} main The main element
  */
+function isArLabelParagraph(p) {
+  return /marketing\s+frontiers/i.test(p.textContent);
+}
+
+function isArIntroParagraph(p) {
+  if (isArLabelParagraph(p) || p.querySelector('strong') || /read more/i.test(p.textContent)) {
+    return false;
+  }
+  const text = p.textContent.trim();
+  return text.length > 60
+    || /mobile-enabled|mixed-reality|augmented reality is the play|conversant in mixed-reality/i.test(
+      text,
+    );
+}
+
+function createArSection(insertAfter, classNames) {
+  const section = document.createElement('div');
+  section.classList.add('section', ...classNames);
+  section.dataset.sectionStatus = 'initialized';
+  const host = document.createElement('div');
+  section.append(host);
+  insertAfter.after(section);
+  return { section, host };
+}
+
+function ensureArIntroSection(main, introPs, insertAfter) {
+  if (!introPs.length) return null;
+
+  let introSection = main.querySelector('.ar-intro-section');
+  if (!introSection) {
+    ({ section: introSection } = createArSection(insertAfter, ['light', 'ar-intro-section']));
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('default-content-wrapper', 'ar-intro-content');
+    introSection.querySelector(':scope > div').append(wrapper);
+  }
+
+  const wrapper = introSection.querySelector('.ar-intro-content');
+  introPs.forEach((p) => wrapper.append(p));
+  return introSection;
+}
+
+function splitMergedArBlocks(main) {
+  const merged = [...main.querySelectorAll('.section')].find((section) => (
+    section.querySelector('.columns-positioning') && section.querySelector('.cards-feature')
+  ));
+  if (!merged) return;
+
+  const cardWrappers = [...merged.querySelectorAll('.cards-feature-wrapper')];
+  let anchor = merged;
+  cardWrappers.forEach((wrapper) => {
+    const { section, host } = createArSection(anchor, [
+      'light',
+      'ar-article-section',
+      'cards-feature-container',
+    ]);
+    host.append(wrapper);
+    anchor = section;
+  });
+
+  merged.classList.remove('cards-feature-container');
+
+  const introWrapper = merged.querySelector('.default-content-wrapper');
+  if (introWrapper) {
+    const introPs = [...introWrapper.querySelectorAll('p')].filter(isArIntroParagraph);
+    const heroSection = main.querySelector('.hero-intro')?.closest('.section');
+    if (introPs.length && heroSection) {
+      ensureArIntroSection(main, introPs, heroSection);
+    }
+    if (!introWrapper.textContent.trim()) introWrapper.remove();
+  }
+
+  if (merged.querySelector('.columns-positioning')) {
+    merged.classList.add('ar-quote-section', 'light');
+  }
+}
+
+function decorateAugmentedRealitySections(main) {
+  if (main.dataset.arSectionsDecorated) return;
+
+  const heroBlock = main.querySelector('.hero-intro');
+  const heroH1 = heroBlock?.querySelector('h1');
+  const isArPage = (heroH1 && /augmented\s+reality/i.test(heroH1.textContent.trim()))
+    || /\/augmented-reality\/?$/.test(window.location.pathname);
+  if (!isArPage) return;
+
+  main.dataset.arSectionsDecorated = 'true';
+
+  splitMergedArBlocks(main);
+
+  const heroSection = heroBlock?.closest('.section');
+  if (heroSection) {
+    heroSection.classList.add('ar-hero-section', 'light');
+    heroSection.querySelectorAll('.default-content-wrapper').forEach((wrapper) => {
+      if (wrapper.querySelector('img[src*="about:error"], img[src^="about:"]')) wrapper.remove();
+    });
+
+    const introFromHero = heroBlock
+      ? [...heroBlock.querySelectorAll('p')].filter(isArIntroParagraph)
+      : [];
+    if (introFromHero.length) {
+      ensureArIntroSection(main, introFromHero, heroSection);
+    }
+  }
+
+  main.querySelectorAll('.section').forEach((section) => {
+    if (section.querySelector('.columns-positioning-ar, .columns-positioning')) {
+      const heading = section.querySelector('h3');
+      if (heading && /ar tech/i.test(heading.textContent)) {
+        section.classList.add('ar-quote-section', 'light');
+      }
+    }
+    if (section.querySelector('.cards-feature-ar-article') && !section.classList.contains('ar-article-section')) {
+      section.classList.add('ar-article-section', 'light', 'cards-feature-container');
+    }
+  });
+
+  const orphanIntro = [...main.querySelectorAll('.section')].find((section) => {
+    if (section === heroSection || section.classList.contains('ar-intro-section')) return false;
+    const wrapper = section.querySelector(':scope > .default-content-wrapper');
+    if (!wrapper || section.querySelector('.block')) return false;
+    return [...wrapper.querySelectorAll('p')].some(isArIntroParagraph);
+  });
+  if (orphanIntro && heroSection) {
+    orphanIntro.classList.add('ar-intro-section', 'light');
+    orphanIntro.querySelector('.default-content-wrapper')?.classList.add('ar-intro-content');
+  }
+}
+
+/**
+ * Newsletter sign-up: move vector logo image to a right-side decorative background.
+ * Shared by About Us, AR, and homepage.
+ * @param {Element} main The main element
+ */
+function decorateNewsletterSection(main) {
+  main.querySelectorAll('.section.accent').forEach((section) => {
+    if (!section.querySelector('.form')) return;
+    if (section.classList.contains('newsletter-section')) return;
+
+    section.classList.add('newsletter-section');
+
+    const wrapper = section.querySelector(':scope > .default-content-wrapper');
+    if (!wrapper) return;
+
+    const bgParagraph = [...wrapper.querySelectorAll('p')].find((p) => (
+      p.querySelector('picture, img') && !p.textContent.replace(/\u00a0/g, ' ').trim()
+    ));
+    if (!bgParagraph) return;
+
+    const picture = bgParagraph.querySelector('picture') || bgParagraph.querySelector('img');
+    if (!picture) return;
+
+    const bgWrap = document.createElement('div');
+    bgWrap.className = 'newsletter-bg';
+    bgWrap.setAttribute('aria-hidden', 'true');
+    bgWrap.append(picture);
+    bgParagraph.remove();
+
+    section.querySelector(':scope > div')?.append(bgWrap);
+  });
+}
+
+/**
+ * Contact Us section: heading + intro row, three-column contact details.
+ * Shared by About Us (GENERAL + WORK WITH US) and AR page (EMAIL only).
+ * @param {Element} main The main element
+ */
+function getContactColumnLabel(paragraph) {
+  return paragraph.querySelector('strong')?.textContent.trim() || '';
+}
+
 function decorateContactSection(main) {
   main.querySelectorAll('.section').forEach((section) => {
     if (section.classList.contains('contact-section')) return;
@@ -206,22 +380,19 @@ function decorateContactSection(main) {
     if (!heading) return;
 
     const intro = [...wrapper.querySelectorAll('p')].find((p) => (
-      !p.querySelector('strong') && /get in touch|message/i.test(p.textContent)
+      !p.querySelector('strong') && /get in touch|message|experts behind/i.test(p.textContent)
     ));
     const detailPs = [...wrapper.querySelectorAll('p')].filter((p) => p !== intro);
 
-    const phoneIdx = detailPs.findIndex((p) => (
-      /^phone$/i.test(p.querySelector('strong')?.textContent.trim() || '')
-    ));
-    const addressIdx = detailPs.findIndex((p) => (
-      /^global address$/i.test(p.querySelector('strong')?.textContent.trim() || '')
-    ));
+    const phoneIdx = detailPs.findIndex((p) => /^phone$/i.test(getContactColumnLabel(p)));
+    const addressIdx = detailPs.findIndex((p) => /^global address$/i.test(getContactColumnLabel(p)));
     if (phoneIdx < 0 || addressIdx < 0) return;
 
-    const hasGeneral = detailPs.slice(0, phoneIdx).some((p) => (
-      /^general$/i.test(p.querySelector('strong')?.textContent.trim() || '')
+    const emailColumnLabels = /^(general|email|work with us)$/i;
+    const hasEmailColumn = detailPs.slice(0, phoneIdx).some((p) => (
+      emailColumnLabels.test(getContactColumnLabel(p))
     ));
-    if (!hasGeneral) return;
+    if (!hasEmailColumn) return;
 
     section.classList.add('contact-section');
 
@@ -304,7 +475,9 @@ export function decorateMain(main) {
   decorateLeadershipSection(main);
   decorateContactSection(main);
   decorateAboutMissionSection(main);
+  decorateNewsletterSection(main);
   decorateBlocks(main);
+  decorateAugmentedRealitySections(main);
   decorateButtons(main);
 }
 

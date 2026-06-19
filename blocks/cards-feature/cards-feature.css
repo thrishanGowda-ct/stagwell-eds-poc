@@ -2,14 +2,14 @@
 
 /* Values extracted from source computed styles (stagwellglobal.com). */
 
-/* Section background: white top → light grey bottom */
-main > .section.cards-feature-container {
+/* Section background: white top → light grey bottom (homepage grid only) */
+main > .section.cards-feature-container:not(.ar-article-section) {
   background-image: linear-gradient(180deg, #fff 65%, #f5f7f6 65%) !important;
 }
 
-/* Wider 170px gutter for this section (overrides the global 90px) */
+/* Wider 170px gutter for homepage positioning only */
 @media (width >= 900px) {
-  main > .section.cards-feature-container > div {
+  main > .section.cards-feature-container:not(.ar-article-section) > div {
     padding: 0 170px;
   }
 }
@@ -56,6 +56,10 @@ main > .section.cards-feature-container {
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* Homepage 3-up grid only — AR article cards use .cards-feature-ar-image */
+.cards-feature:not(.cards-feature-ar-article) .cards-feature-card-image img {
   aspect-ratio: 346 / 200;
   object-fit: cover;
 }
@@ -82,5 +86,48 @@ main > .section.cards-feature-container {
   .cards-feature > ul > li {
     flex: 1 1 0;
     min-width: 0;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Generic single-article variant (non-AR pages)
+   ------------------------------------------------------------------------- */
+
+.cards-feature.cards-feature-article {
+  margin: 0;
+  padding: 0;
+}
+
+.cards-feature.cards-feature-article > ul {
+  gap: 0;
+}
+
+.cards-feature.cards-feature-article .cards-feature-card-image {
+  margin: 0 0 16px;
+}
+
+.cards-feature.cards-feature-article .cards-feature-card-image img {
+  aspect-ratio: auto;
+  object-fit: contain;
+  max-height: 320px;
+}
+
+@media (width >= 900px) {
+  .cards-feature.cards-feature-article > ul > li {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 72px;
+    padding: 1.5rem 0;
+  }
+
+  .cards-feature.cards-feature-article .cards-feature-card-image {
+    flex: 0 0 32%;
+    margin: 0;
+  }
+
+  .cards-feature.cards-feature-article .cards-feature-card-body {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 624px;
   }
 }

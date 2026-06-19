@@ -5,13 +5,22 @@
 
 /* Section: teal band, generous vertical padding */
 main .section.accent:has(.form) {
+  position: relative;
   margin: 0;
+  overflow: hidden;
 }
 
 main .section.accent:has(.form) > div {
+  position: relative;
   max-width: var(--content-max-width, 1248px);
   padding: 0 32px;
   margin: auto 6rem;
+}
+
+main .section.accent:has(.form) .default-content-wrapper,
+main .section.accent:has(.form) .form-wrapper {
+  position: relative;
+  z-index: 1;
 }
 
 /* "Newsletter" + "Sign Up" headings live in default content above the block */
@@ -219,7 +228,7 @@ main:has(.section.accent .form) + footer {
 @media (width >= 900px) {
   main .section.accent:has(.form) > div {
     padding: 0;
-    margin: auto 6rem
+    margin: auto 6rem;
   }
 
   .form .form-row-split {
@@ -227,7 +236,28 @@ main:has(.section.accent .form) + footer {
     gap: 40px 80px;
   }
 
+  main .section.accent:has(.form) .newsletter-bg {
+    display: block;
+    position: absolute;
+    right: 6rem;
+    top: 50%;
+    z-index: 0;
+    width: min(38vw, 480px);
+    line-height: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
 
+  main .section.accent:has(.form) .newsletter-bg img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.55;
+  }
+}
+
+main .section.accent:has(.form) .newsletter-bg {
+  display: none;
 }
 
 @media (width < 600px) {
