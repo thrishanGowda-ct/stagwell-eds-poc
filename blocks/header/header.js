@@ -124,6 +124,90 @@ function buildLanguageSwitcher() {
 }
 
 /**
+ * Build the search modal overlay.
+ * @returns {Element} the search modal container
+ */
+function buildSearchModal() {
+  const modal = document.createElement('div');
+  modal.className = 'search-modal';
+  modal.innerHTML = `
+    <div class="search-modal-content">
+      <button class="search-close" aria-label="Close Search">&times;</button>
+      <div class="search-input-wrapper">
+        <svg class="search-input-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        <input type="text" id="global-search-input" placeholder="Search Stagwell..." autocomplete="off" />
+      </div>
+      <div class="search-results" id="global-search-results"></div>
+    </div>
+  `;
+
+  modal.querySelector('.search-close').addEventListener('click', () => {
+    modal.classList.remove('is-active');
+    document.body.style.overflowY = '';
+  });
+
+  const input = modal.querySelector('#global-search-input');
+  input.addEventListener('input', (e) => {
+    const query = e.target.value;
+    // TODO: Add your Algolia search logic here
+    return query;
+  });
+
+  return modal;
+}
+
+/**
+ * Toggle the search modal visibility.
+ */
+function toggleSearchModal() {
+  let searchModal = document.querySelector('.search-modal');
+  if (!searchModal) {
+    searchModal = buildSearchModal();
+    document.body.append(searchModal);
+  }
+
+  const isActive = searchModal.classList.toggle('is-active');
+  if (isActive) {
+    const input = searchModal.querySelector('input');
+    if (input) input.focus();
+    document.body.style.overflowY = 'hidden'; // Prevent background scrolling
+  } else {
+    document.body.style.overflowY = '';
+  }
+}
+
+/**
+ * Build the search icon trigger.
+ * @returns {Element} the search trigger container
+ */
+function buildSearchTrigger() {
+  const container = document.createElement('div');
+  container.className = 'nav-search';
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'nav-search-toggle';
+  toggle.setAttribute('aria-label', 'Open search');
+
+  // Inline SVG matching the styling of the globe icon
+  toggle.innerHTML = `<svg class="nav-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="currentColor" stroke-width="1.6"/>
+    </svg>`;
+
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleSearchModal();
+  });
+
+  container.append(toggle);
+  return container;
+}
+
+/**
  * Collapse every open nav dropdown and hide the overlay.
  * @param {Element} navSections The nav sections container
  * @param {Element} overlay The backdrop overlay element
@@ -318,6 +402,10 @@ export default async function decorate(block) {
   const languageSwitcher = buildLanguageSwitcher();
   if (navBrand) navBrand.before(languageSwitcher);
   else nav.append(languageSwitcher);
+
+  //  Inject search right after the language switcher ---
+  const searchTrigger = buildSearchTrigger();
+  languageSwitcher.after(searchTrigger);
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
