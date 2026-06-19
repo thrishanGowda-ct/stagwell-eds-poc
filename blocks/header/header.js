@@ -123,7 +123,7 @@ function buildLanguageSwitcher() {
   return container;
 }
 
- /**
+/**
  * Build the search modal overlay and hook up Algolia search with Facets.
  * @returns {Element} the search modal container
  */
@@ -178,14 +178,14 @@ async function buildSearchModal() {
     try {
       const searchParams = {
         hitsPerPage: 5,
-        facets: ['category'], 
+        facets: ['category'],
         facetFilters: [`language:${currentLang}`], // <-- Strict language filter applied
       };
 
       if (activeCategory) {
         searchParams.facetFilters = [
           `language:${currentLang}`,
-          `category:${activeCategory}`
+          `category:${activeCategory}`,
         ];
       }
 
