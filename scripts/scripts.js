@@ -275,6 +275,38 @@ function splitMergedArBlocks(main) {
   }
 }
 
+/**
+ * AR newsletter only: move vector logo to a right-side decorative background.
+ * @param {Element} main The main element
+ */
+function decorateArNewsletterSection(main) {
+  main.querySelectorAll('.section.accent').forEach((section) => {
+    if (!section.querySelector('.form')) return;
+    if (section.classList.contains('ar-newsletter-section')) return;
+
+    section.classList.add('ar-newsletter-section');
+
+    const wrapper = section.querySelector(':scope > .default-content-wrapper');
+    if (!wrapper) return;
+
+    const bgParagraph = [...wrapper.querySelectorAll('p')].find((p) => (
+      p.querySelector('picture, img') && !p.textContent.replace(/\u00a0/g, ' ').trim()
+    ));
+    if (!bgParagraph) return;
+
+    const picture = bgParagraph.querySelector('picture') || bgParagraph.querySelector('img');
+    if (!picture) return;
+
+    const bgWrap = document.createElement('div');
+    bgWrap.className = 'ar-newsletter-bg';
+    bgWrap.setAttribute('aria-hidden', 'true');
+    bgWrap.append(picture);
+    bgParagraph.remove();
+
+    section.querySelector(':scope > div')?.append(bgWrap);
+  });
+}
+
 function decorateAugmentedRealitySections(main) {
   if (main.dataset.arSectionsDecorated) return;
 
@@ -325,39 +357,8 @@ function decorateAugmentedRealitySections(main) {
     orphanIntro.classList.add('ar-intro-section', 'light');
     orphanIntro.querySelector('.default-content-wrapper')?.classList.add('ar-intro-content');
   }
-}
 
-/**
- * Newsletter sign-up: move vector logo image to a right-side decorative background.
- * Shared by About Us, AR, and homepage.
- * @param {Element} main The main element
- */
-function decorateNewsletterSection(main) {
-  main.querySelectorAll('.section.accent').forEach((section) => {
-    if (!section.querySelector('.form')) return;
-    if (section.classList.contains('newsletter-section')) return;
-
-    section.classList.add('newsletter-section');
-
-    const wrapper = section.querySelector(':scope > .default-content-wrapper');
-    if (!wrapper) return;
-
-    const bgParagraph = [...wrapper.querySelectorAll('p')].find((p) => (
-      p.querySelector('picture, img') && !p.textContent.replace(/\u00a0/g, ' ').trim()
-    ));
-    if (!bgParagraph) return;
-
-    const picture = bgParagraph.querySelector('picture') || bgParagraph.querySelector('img');
-    if (!picture) return;
-
-    const bgWrap = document.createElement('div');
-    bgWrap.className = 'newsletter-bg';
-    bgWrap.setAttribute('aria-hidden', 'true');
-    bgWrap.append(picture);
-    bgParagraph.remove();
-
-    section.querySelector(':scope > div')?.append(bgWrap);
-  });
+  decorateArNewsletterSection(main);
 }
 
 /**
@@ -475,7 +476,6 @@ export function decorateMain(main) {
   decorateLeadershipSection(main);
   decorateContactSection(main);
   decorateAboutMissionSection(main);
-  decorateNewsletterSection(main);
   decorateBlocks(main);
   decorateAugmentedRealitySections(main);
   decorateButtons(main);

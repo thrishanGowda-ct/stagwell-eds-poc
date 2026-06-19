@@ -582,3 +582,45 @@ main > .section.ar-article-section .cards-feature-ar-cta a:any-link {
     grid-row: 2;
   }
 }
+
+/* Augmented Reality (/en/augmented-reality): newsletter logo bg — AR page only */
+
+main > .section.accent.ar-newsletter-section:has(.form) {
+  position: relative;
+  overflow: hidden;
+}
+
+main > .section.accent.ar-newsletter-section:has(.form) > div {
+  position: relative;
+}
+
+main > .section.accent.ar-newsletter-section:has(.form) .default-content-wrapper,
+main > .section.accent.ar-newsletter-section:has(.form) .form-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+main > .section.accent.ar-newsletter-section:has(.form) .ar-newsletter-bg {
+  display: none;
+}
+
+@media (width >= 900px) {
+  main > .section.accent.ar-newsletter-section:has(.form) .ar-newsletter-bg {
+    display: block;
+    position: absolute;
+    right: 6rem;
+    top: 50%;
+    z-index: 0;
+    width: min(38vw, 480px);
+    line-height: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+
+  main > .section.accent.ar-newsletter-section:has(.form) .ar-newsletter-bg img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.55;
+  }
+}
