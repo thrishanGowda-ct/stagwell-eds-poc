@@ -1,0 +1,17 @@
+{
+  "status": "success",
+  "url": "https://www.stagwellglobal.com/augmented-reality/",
+  "path": "en/augmented-reality",
+  "timestamp": "2026-06-18T18:01:53.858Z",
+  "title": "Stagwell | Augmented Reality | Stagwell Marketing Frontiers - Stagwell",
+  "template": "augmented-reality",
+  "blocks": [
+    "hero-intro",
+    "columns-positioning",
+    "cards-feature",
+    "cards-feature",
+    "cards-feature",
+    "cards-stats",
+    "form"
+  ]
+}

@@ -37,4 +37,16 @@ export default function decorate(block) {
   });
   block.textContent = '';
   block.append(ul);
+
+  // Single-card usage (e.g. the Augmented Reality article rows) renders as a
+  // horizontal media row (image left, text right) instead of the 3-up grid.
+  // Tag it so layout CSS can target only this case without touching the grid.
+  if (ul.children.length === 1) {
+    block.classList.add('cards-feature-article');
+    const card = ul.querySelector('li');
+    // The last paragraph in the body acts as the "Read More" call to action.
+    const body = card?.querySelector('.cards-feature-card-body');
+    const lastP = body?.querySelector('p:last-of-type');
+    if (lastP) lastP.classList.add('cards-feature-cta');
+  }
 }

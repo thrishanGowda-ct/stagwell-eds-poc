@@ -84,3 +84,90 @@ main > .section.cards-feature-container {
     min-width: 0;
   }
 }
+
+/* -------------------------------------------------------------------------
+   Single-article variant (cards-feature-article)
+   Used on the Augmented Reality page where each block holds ONE card and
+   renders as a horizontal media row (image left, text right). All rules are
+   scoped to .cards-feature-article so the 3-up homepage grid is untouched.
+   ------------------------------------------------------------------------- */
+
+/* stacked articles sit close together (source gap ~23px) */
+.cards-feature.cards-feature-article {
+  margin: 0;
+}
+
+.cards-feature.cards-feature-article > ul {
+  gap: 0;
+}
+
+/* mobile: image on top, text below */
+.cards-feature.cards-feature-article .cards-feature-card-image {
+  margin: 0 0 16px;
+}
+
+.cards-feature.cards-feature-article .cards-feature-card-image img {
+  aspect-ratio: 276 / 225;
+  object-fit: contain;
+}
+
+/* title uses h4 here; uppercase navy, matching source */
+.cards-feature.cards-feature-article .cards-feature-card-body h4 {
+  margin: 0;
+  padding: 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-m); /* 24px desktop */
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 2.88px;
+  text-transform: uppercase;
+  color: var(--text-color);
+}
+
+.cards-feature.cards-feature-article .cards-feature-card-body p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-color);
+}
+
+/* "Read More" call to action: bold gold, letter-spaced, spaced above */
+.cards-feature.cards-feature-article .cards-feature-card-body p.cards-feature-cta {
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1.92px;
+  color: var(--color-accent-gold);
+}
+
+/* CTA may be auto-decorated into a button/link by EDS; keep it gold + bold */
+.cards-feature.cards-feature-article .cards-feature-card-body p.cards-feature-cta a:any-link {
+  color: var(--color-accent-gold);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (width >= 900px) {
+  /* horizontal media row: image ~25%, text fills the rest, top aligned */
+  .cards-feature.cards-feature-article > ul > li {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 72px;
+  }
+
+  .cards-feature.cards-feature-article .cards-feature-card-image {
+    flex: 0 0 19%;
+    margin: 0;
+  }
+
+  .cards-feature.cards-feature-article .cards-feature-card-body {
+    flex: 1 1 0;
+    min-width: 0;
+
+    /* source keeps the text to ~624px with trailing whitespace on the right */
+    max-width: 624px;
+  }
+}

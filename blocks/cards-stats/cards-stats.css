@@ -28,7 +28,7 @@ main .section.has-cards-stats-intro .default-content-wrapper h2,
 main .section.has-cards-stats-intro .default-content-wrapper h3 {
   margin: 0;
   font-family: var(--display-font-family);
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(28px, 4vw, 60px);
   font-weight: 700;
   font-style: normal;
   line-height: 1.05;
@@ -157,6 +157,22 @@ main .section.has-cards-stats-intro .cards-stats ul {
   color: var(--color-accent);
 }
 
+/* DESCRIPTION — optional sentence beneath the label (e.g. AR "Data Corner").
+   Only present when authored as a third element in a stat row; on stat usages
+   without a description (homepage / about-us) there is no <p>, so this is a
+   no-op there. Specificity raised with the section context so it orders after
+   the higher-specificity intro-panel paragraph rules above. */
+main .section.has-cards-stats-intro .cards-stats li p {
+  margin: 10px 0 0;
+  font-family: var(--body-font-family);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.47;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--text-color);
+}
+
 /* ══ ENTRANCE ANIMATION (progressive enhancement) ═══════════════════════════ */
 .cards-stats.has-animation li {
   opacity: 0;
@@ -204,6 +220,11 @@ main .section.dark.has-cards-stats-intro .default-content-wrapper h3 + h3 {
 main .section.dark.has-cards-stats-intro .default-content-wrapper p {
   color: rgb(255 255 255 / 80%);
   opacity: 1;
+}
+
+/* Stat description sentence → off-white on dark (matches source Data Corner) */
+main .section.dark.has-cards-stats-intro .cards-stats li p {
+  color: rgb(245 247 246);
 }
 
 /* CTA link → white */

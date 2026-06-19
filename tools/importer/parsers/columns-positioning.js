@@ -42,6 +42,27 @@ export default function parse(element, { document }) {
       if (inner) cellContent.push(inner);
     }
 
+    // Testimonial / pull-quote module (e.g. the "Our AR Tech in Action" Forbes
+    // quote). Capture the quote text as a <blockquote> and the author line so
+    // the quote isn't dropped. Absent on pages with no testimonial (no-op).
+    const testimonial = column.querySelector('.et_pb_testimonial');
+    if (testimonial) {
+      const quoteText = testimonial.querySelector(
+        '.et_pb_testimonial_content, blockquote, p',
+      );
+      const author = testimonial.querySelector('.et_pb_testimonial_author');
+      if (quoteText && (quoteText.textContent || '').trim()) {
+        const bq = document.createElement('blockquote');
+        bq.innerHTML = quoteText.innerHTML;
+        cellContent.push(bq);
+      }
+      if (author && (author.textContent || '').trim()) {
+        const cite = document.createElement('p');
+        cite.innerHTML = `<em>${author.textContent.trim()}</em>`;
+        cellContent.push(cite);
+      }
+    }
+
     // CTA link(s): inline button links (e.g. "Our Story" → /about-us/)
     const ctaLinks = Array.from(
       column.querySelectorAll('.stw_inline_button a, a.sw-btn__link, a[href]'),
