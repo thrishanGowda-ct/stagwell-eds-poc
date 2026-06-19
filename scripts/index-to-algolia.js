@@ -14,28 +14,27 @@ async function pushDataToAlgolia() {
     const response = await fetch('https://main--stagwell-eds-poc--thrishangowda-ct.aem.live/stagwell-index.json');
 
     if (!response.ok) {
-     //Added backticks around the error message
       throw new Error(`Failed to fetch data: ${response.statusText}`);
     }
 
     const data = await response.json();
 
-    // Create a new array of records, injecting a strict objectID
+    // Inject language and objectID into each record
     const records = data.data.map((item) => {
+      const segments = item.path.split('/').filter(Boolean);
+      const knownLangs = ['en', 'de', 'fr'];
+      const langCode = knownLangs.includes(segments[0]) ? segments[0] : 'en';
+
       return {
         ...item,
-        // We use the page path as the unique ID.
-        // This ensures Algolia UPDATES existing records instead of duplicating them.
+        language: langCode,
         objectID: item.path,
       };
     });
 
-    //Added backticks around the console log
     console.log(`Found ${records.length} records. Pushing to Algolia...`);
-
     await index.saveObjects(records);
-
-    console.log('Success! Your updated data is now in the cloud cabinet.');
+    console.log('Success! Data pushed.');
   } catch (error) {
     console.error('Error pushing data to Algolia:', error);
     process.exit(1);
