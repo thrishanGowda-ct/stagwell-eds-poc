@@ -28,7 +28,7 @@ main .section.has-cards-stats-intro .default-content-wrapper h2,
 main .section.has-cards-stats-intro .default-content-wrapper h3 {
   margin: 0;
   font-family: var(--display-font-family);
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(28px, 4vw, 60px);
   font-weight: 700;
   font-style: normal;
   line-height: 1.05;

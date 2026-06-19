@@ -125,3 +125,72 @@
     letter-spacing: -0.48px;
   }
 }
+
+/* About Us (/en/about-us): "About" + "Stagwell" intro — source .et_pb_section_0 */
+main > .section:has(.hero-intro-about) {
+  background-color: #f5f7f6;
+  margin: 0;
+  padding: 5rem 0 8rem;
+}
+
+@media (width >= 900px) {
+  main > .section:has(.hero-intro-about) {
+    padding: 8rem 6rem 12rem;
+  }
+}
+
+.hero-intro.hero-intro-about {
+  display: block;
+  padding: 0;
+  margin: 0;
+  max-width: 36rem;
+}
+
+.hero-intro.hero-intro-about > div:last-child {
+  border: none;
+  padding: 0;
+  flex: none;
+}
+
+.hero-intro-about h1 {
+  margin: 0;
+  line-height: 0.95;
+}
+
+.hero-intro-about .hero-intro-about-title {
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  font-size: 52px;
+  letter-spacing: -0.02em;
+  color: var(--text-color);
+}
+
+.hero-intro-about .hero-intro-about-brand {
+  display: block;
+  font-family: var(--display-font-family);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 52px;
+  letter-spacing: -0.04em;
+  color: var(--color-accent-gold);
+}
+
+.hero-intro-about .hero-intro-about-intro {
+  margin: 2.5rem 0 0;
+  max-width: 28rem;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+@media (width >= 900px) {
+  .hero-intro-about .hero-intro-about-title,
+  .hero-intro-about .hero-intro-about-brand {
+    font-size: 92px;
+  }
+
+  .hero-intro-about .hero-intro-about-intro {
+    margin-top: 4rem;
+  }
+}
