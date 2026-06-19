@@ -124,6 +124,190 @@ function buildLanguageSwitcher() {
 }
 
 /**
+ * Build the search modal overlay and hook up Algolia search with Facets.
+ * @returns {Element} the search modal container
+ */
+async function buildSearchModal() {
+  const modal = document.createElement('div');
+  modal.className = 'search-modal';
+  modal.innerHTML = `
+    <div class="search-modal-content">
+      <button class="search-close" aria-label="Close Search">&times;</button>
+      <div class="search-input-wrapper">
+        <svg class="search-input-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        <input type="text" id="global-search-input" placeholder="Search Stagwell..." autocomplete="off" />
+      </div>
+      <div class="search-facets-wrapper" id="global-search-facets"></div>
+
+      <div class="search-results" id="global-search-results"></div>
+    </div>
+  `;
+
+  const input = modal.querySelector('#global-search-input');
+  const resultsContainer = modal.querySelector('#global-search-results');
+  const facetsContainer = modal.querySelector('#global-search-facets');
+
+  // State to track which category is currently selected
+  let activeCategory = '';
+
+  // Close modal and clear everything
+  modal.querySelector('.search-close').addEventListener('click', () => {
+    modal.classList.remove('is-active');
+    document.body.style.overflowY = '';
+    input.value = '';
+    resultsContainer.innerHTML = '';
+    facetsContainer.innerHTML = '';
+    activeCategory = '';
+  });
+
+  // Initialize Algolia
+  // eslint-disable-next-line import/no-unresolved
+  const { default: algoliasearch } = await import('https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.esm.browser.js');
+  const client = algoliasearch('EX4T3T2OE1', '89ac8a6eaa175d2683eb6c95c1808ba2');
+  const index = client.initIndex('stagwell-index');
+
+  // The core search function (so we can call it when typing OR clicking a facet)
+  const performSearch = async () => {
+    const query = input.value;
+
+    if (query.trim().length < 2 && !activeCategory) {
+      resultsContainer.innerHTML = '';
+      facetsContainer.innerHTML = '';
+      return;
+    }
+
+    try {
+      // Build the search parameters
+      const searchParams = {
+        hitsPerPage: 5,
+        facets: ['category'], // Tell Algolia to return categories
+      };
+
+      // If a category is selected, apply the filter!
+      if (activeCategory) {
+        searchParams.facetFilters = [[`category:${activeCategory}`]];
+      }
+
+      const { hits, facets } = await index.search(query, searchParams);
+
+      // --- 1. RENDER FACETS ---
+      const categoryFacets = facets?.category || {};
+      let facetsHTML = '';
+
+      // Only show facets if there are any available for this query
+      if (Object.keys(categoryFacets).length > 0) {
+        facetsHTML = Object.entries(categoryFacets).map(([categoryName, count]) => {
+          const isSelected = activeCategory === categoryName ? 'is-selected' : '';
+          return `<button class="facet-pill ${isSelected}" data-category="${categoryName}">
+                    ${categoryName} <span class="facet-count">(${count})</span>
+                  </button>`;
+        }).join('');
+      }
+
+      // Add a "Clear" button if a category is currently active
+      if (activeCategory) {
+        facetsHTML = `<button class="facet-pill clear-facet" data-category="">&times; Clear Filter</button>${facetsHTML}`;
+      }
+
+      facetsContainer.innerHTML = facetsHTML;
+
+      // --- 2. RENDER HITS ---
+      if (hits.length === 0) {
+        resultsContainer.innerHTML = '<p class="no-results">No results found.</p>';
+        return;
+      }
+
+      const resultsHTML = hits.map((hit) => {
+        // eslint-disable-next-line no-underscore-dangle
+        const title = hit._highlightResult?.title?.value || hit.title || hit.path;
+        const description = hit.description || '';
+
+        return `
+          <a href="${hit.path}" class="search-result-item">
+            <h4 class="search-result-title">${title}</h4>
+            <p class="search-result-desc">${description}</p>
+          </a>
+        `;
+      }).join('');
+
+      resultsContainer.innerHTML = resultsHTML;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Algolia Search Error:', error);
+      resultsContainer.innerHTML = '<p class="error-results">Search is currently unavailable.</p>';
+    }
+  };
+
+  // Listen for typing events
+  input.addEventListener('input', performSearch);
+
+  // Listen for Facet Clicks (Event Delegation)
+  facetsContainer.addEventListener('click', (e) => {
+    const clickedPill = e.target.closest('.facet-pill');
+    if (!clickedPill) return;
+
+    // Update the state with the clicked category (or clear it)
+    activeCategory = clickedPill.getAttribute('data-category');
+
+    // Re-run the search with the new filter applied
+    performSearch();
+    input.focus(); // Keep the user's cursor in the box
+  });
+
+  return modal;
+}
+
+/**
+ * Toggle the search modal visibility.
+ */
+async function toggleSearchModal() {
+  let searchModal = document.querySelector('.search-modal');
+  if (!searchModal) {
+    searchModal = await buildSearchModal();
+    document.body.append(searchModal);
+  }
+
+  const isActive = searchModal.classList.toggle('is-active');
+  if (isActive) {
+    const input = searchModal.querySelector('input');
+    if (input) input.focus();
+    document.body.style.overflowY = 'hidden'; // Prevent background scrolling
+  } else {
+    document.body.style.overflowY = '';
+  }
+}
+/**
+ * Build the search icon trigger.
+ * @returns {Element} the search trigger container
+ */
+function buildSearchTrigger() {
+  const container = document.createElement('div');
+  container.className = 'nav-search';
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'nav-search-toggle';
+  toggle.setAttribute('aria-label', 'Open search');
+
+  // Inline SVG matching the styling of the globe icon
+  toggle.innerHTML = `<svg class="nav-search-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="11" cy="11" r="8" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="currentColor" stroke-width="1.6"/>
+    </svg>`;
+
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    toggleSearchModal();
+  });
+
+  container.append(toggle);
+  return container;
+}
+
+/**
  * Collapse every open nav dropdown and hide the overlay.
  * @param {Element} navSections The nav sections container
  * @param {Element} overlay The backdrop overlay element
@@ -318,6 +502,10 @@ export default async function decorate(block) {
   const languageSwitcher = buildLanguageSwitcher();
   if (navBrand) navBrand.before(languageSwitcher);
   else nav.append(languageSwitcher);
+
+  //  Inject search right after the language switcher ---
+  const searchTrigger = buildSearchTrigger();
+  languageSwitcher.after(searchTrigger);
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
