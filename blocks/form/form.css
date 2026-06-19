@@ -5,13 +5,22 @@
 
 /* Section: teal band, generous vertical padding */
 main .section.accent:has(.form) {
+  position: relative;
   margin: 0;
+  overflow: hidden;
 }
 
 main .section.accent:has(.form) > div {
+  position: relative;
   max-width: var(--content-max-width, 1248px);
   padding: 0 32px;
   margin: auto 6rem;
+}
+
+main .section.accent:has(.form) .default-content-wrapper,
+main .section.accent:has(.form) .form-wrapper {
+  position: relative;
+  z-index: 1;
 }
 
 /* "Newsletter" + "Sign Up" headings live in default content above the block */
@@ -226,30 +235,8 @@ main:has(.section.accent .form) + footer {
     grid-template-columns: 1fr 1fr;
     gap: 40px 80px;
   }
-}
 
-/* Decorative Stagwell logo — right side, all newsletter sections */
-main .section.newsletter-section {
-  position: relative;
-  overflow: hidden;
-}
-
-main .section.newsletter-section > div {
-  position: relative;
-}
-
-main .section.newsletter-section .newsletter-bg {
-  display: none;
-}
-
-main .section.newsletter-section .default-content-wrapper,
-main .section.newsletter-section .form-wrapper {
-  position: relative;
-  z-index: 1;
-}
-
-@media (width >= 900px) {
-  main .section.newsletter-section .newsletter-bg {
+  main .section.accent:has(.form) .newsletter-bg {
     display: block;
     position: absolute;
     right: 6rem;
@@ -261,14 +248,16 @@ main .section.newsletter-section .form-wrapper {
     transform: translateY(-50%);
   }
 
-  main .section.newsletter-section .newsletter-bg img {
+  main .section.accent:has(.form) .newsletter-bg img {
     width: 100%;
     height: auto;
     display: block;
-    opacity: 1.55;
-    margin-top: 30rem;
-    margin-left: 5rem;
+    opacity: 0.55;
   }
+}
+
+main .section.accent:has(.form) .newsletter-bg {
+  display: none;
 }
 
 @media (width < 600px) {

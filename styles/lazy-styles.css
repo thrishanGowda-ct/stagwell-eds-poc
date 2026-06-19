@@ -120,12 +120,6 @@ main > .section.ar-quote-section .columns-positioning-ar > div {
   margin: 0;
 }
 
-main > .section.ar-quote-section .columns-positioning-ar .columns-positioning-media-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 main > .section.ar-quote-section .columns-positioning-ar-text h3 {
   margin: 0 0 2.5rem;
   font-family: var(--display-font-family);
@@ -139,10 +133,9 @@ main > .section.ar-quote-section .columns-positioning-ar-text h3 {
 
 main > .section.ar-quote-section .columns-positioning-ar-accent {
   font-family: var(--heading-font-family);
-  font-style: normal;
+  font-style: italic;
   font-weight: 700;
   color: #009cbd;
-  font-style: italic;
 }
 
 main > .section.ar-quote-section .columns-positioning-ar-quote {
@@ -288,15 +281,6 @@ main > .section.ar-article-section .cards-feature-ar-title {
   color: var(--text-color);
 }
 
-main > .section.ar-article-section .cards-feature-ar-article .cards-feature-card-body p:not(.cards-feature-ar-cta) {
-  margin: 0;
-  font-family: var(--body-font-family);
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.55;
-  color: var(--text-color);
-}
-
 main > .section.ar-article-section .cards-feature-ar-cta {
   margin-top: 1.875rem;
   font-family: var(--body-font-family);
@@ -306,12 +290,6 @@ main > .section.ar-article-section .cards-feature-ar-cta {
   letter-spacing: 1.92px;
   text-transform: uppercase;
   color: #ffb81c;
-}
-
-main > .section.ar-article-section .cards-feature-ar-cta a:any-link {
-  color: #ffb81c;
-  font-weight: 700;
-  text-decoration: none;
 }
 
 @media (width >= 900px) {
@@ -326,7 +304,7 @@ main > .section.ar-article-section .cards-feature-ar-cta a:any-link {
   }
 
   main > .section.ar-intro-section > div {
-    padding: 72px 0 0 0;
+    padding: 72px 0 0;
   }
 
   main > .section.ar-intro-section .ar-intro-content {
@@ -412,6 +390,12 @@ main > .section.ar-article-section .cards-feature-ar-cta a:any-link {
 
   main > .section.ar-article-section .cards-feature-ar-image img {
     max-height: none;
+  }
+
+  main > .section.ar-quote-section .columns-positioning-ar .columns-positioning-media-image img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   main > .section.ar-article-section .cards-feature-ar-article .cards-feature-card-body {
@@ -513,6 +497,19 @@ main > .section.contact-section.light {
   margin-top: 2.5rem;
 }
 
+.contact-column a:any-link {
+  color: var(--text-color);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.contact-column a:any-link:hover {
+  color: var(--color-accent-gold);
+}
+
 main > .section.ar-intro-section .ar-intro-content > p {
   margin: 0 0 1rem;
   font-family: var(--body-font-family);
@@ -529,17 +526,19 @@ main > .section.ar-quote-section .columns-positioning-ar-quote p {
   max-width: 38rem;
 }
 
-.contact-column a:any-link {
-  color: var(--text-color);
+main > .section.ar-article-section .cards-feature-ar-article .cards-feature-card-body p:not(.cards-feature-ar-cta) {
+  margin: 0;
+  font-family: var(--body-font-family);
   font-size: 15px;
   font-weight: 400;
-  letter-spacing: 0.01em;
-  text-decoration: underline;
-  text-transform: uppercase;
+  line-height: 1.55;
+  color: var(--text-color);
 }
 
-.contact-column a:any-link:hover {
-  color: var(--color-accent-gold);
+main > .section.ar-article-section .cards-feature-ar-cta a:any-link {
+  color: #ffb81c;
+  font-weight: 700;
+  text-decoration: none;
 }
 
 @media (width >= 900px) {
