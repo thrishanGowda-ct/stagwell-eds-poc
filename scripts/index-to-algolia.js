@@ -11,7 +11,7 @@ async function pushDataToAlgolia() {
   try {
     console.log('Fetching Edge Delivery Services index data...');
 
-    const response = await fetch('https://feature-bhanushree-stagwell-eds-poc--thrishangowda-ct.aem.page/stagwell-index.json');
+    const response = await fetch('https://main-stagwell-eds-poc--thrishangowda-ct.aem.live/stagwell-index.json');
 
     if (!response.ok) {
      //Added backticks around the error message
