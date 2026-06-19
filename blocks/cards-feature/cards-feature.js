@@ -1,6 +1,7 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default function decorate(block) {
+  const isSingleCard = block.children.length === 1;
   const ul = document.createElement('ul');
   [...block.children].forEach((row) => {
     const li = document.createElement('li');
@@ -19,7 +20,7 @@ export default function decorate(block) {
     });
 
     const heading = bodyDiv?.querySelector('h1, h2, h3, h4, h5, h6');
-    if (heading) {
+    if (heading && !isSingleCard) {
       const titleDiv = document.createElement('div');
       titleDiv.className = 'cards-feature-card-title';
       titleDiv.append(heading);
@@ -38,15 +39,28 @@ export default function decorate(block) {
   block.textContent = '';
   block.append(ul);
 
-  // Single-card usage (e.g. the Augmented Reality article rows) renders as a
-  // horizontal media row (image left, text right) instead of the 3-up grid.
-  // Tag it so layout CSS can target only this case without touching the grid.
+  // Augmented Reality article rows: one card per block, horizontal media layout.
   if (ul.children.length === 1) {
-    block.classList.add('cards-feature-article');
-    const card = ul.querySelector('li');
-    // The last paragraph in the body acts as the "Read More" call to action.
-    const body = card?.querySelector('.cards-feature-card-body');
-    const lastP = body?.querySelector('p:last-of-type');
-    if (lastP) lastP.classList.add('cards-feature-cta');
+    const body = ul.querySelector('.cards-feature-card-body');
+    const heading = body?.querySelector('h1, h2, h3, h4, h5, h6');
+    if (heading && /^ar in /i.test(heading.textContent.trim())) {
+      block.classList.add('cards-feature-ar-article');
+      ul.classList.add('cards-feature-ar-article-list');
+      ul.querySelectorAll(':scope > li').forEach((li) => {
+        li.classList.add('cards-feature-ar-article-item');
+      });
+      ul.querySelectorAll('.cards-feature-card-image').forEach((imageDiv) => {
+        imageDiv.classList.add('cards-feature-ar-image');
+      });
+      heading.classList.add('cards-feature-ar-title');
+      const lastP = body?.querySelector('p:last-of-type');
+      if (lastP && /read more/i.test(lastP.textContent.trim())) {
+        lastP.classList.add('cards-feature-ar-cta');
+      }
+    } else {
+      block.classList.add('cards-feature-article');
+      const lastP = body?.querySelector('p:last-of-type');
+      if (lastP) lastP.classList.add('cards-feature-cta');
+    }
   }
 }

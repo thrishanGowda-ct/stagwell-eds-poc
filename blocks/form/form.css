@@ -219,15 +219,56 @@ main:has(.section.accent .form) + footer {
 @media (width >= 900px) {
   main .section.accent:has(.form) > div {
     padding: 0;
-    margin: auto 6rem
+    margin: auto 6rem;
   }
 
   .form .form-row-split {
     grid-template-columns: 1fr 1fr;
     gap: 40px 80px;
   }
+}
 
+/* Decorative Stagwell logo — right side, all newsletter sections */
+main .section.newsletter-section {
+  position: relative;
+  overflow: hidden;
+}
 
+main .section.newsletter-section > div {
+  position: relative;
+}
+
+main .section.newsletter-section .newsletter-bg {
+  display: none;
+}
+
+main .section.newsletter-section .default-content-wrapper,
+main .section.newsletter-section .form-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+@media (width >= 900px) {
+  main .section.newsletter-section .newsletter-bg {
+    display: block;
+    position: absolute;
+    right: 6rem;
+    top: 50%;
+    z-index: 0;
+    width: min(38vw, 480px);
+    line-height: 0;
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+
+  main .section.newsletter-section .newsletter-bg img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 1.55;
+    margin-top: 30rem;
+    margin-left: 5rem;
+  }
 }
 
 @media (width < 600px) {

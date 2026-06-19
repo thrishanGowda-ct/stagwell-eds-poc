@@ -38,10 +38,12 @@ const PAGE_TEMPLATE = {
     { id: 'section-1', name: 'Hero Intro', selector: '.et_pb_section_0 .et_pb_row_0', style: 'light', blocks: ['hero-intro'], defaultContent: [] },
     { id: 'section-2', name: 'Intro Copy', selector: '.et_pb_section_0 .et_pb_row_1', style: 'light', blocks: [], defaultContent: ['.et_pb_section_0 .et_pb_row_1 .et_pb_text_inner'] },
     { id: 'section-3', name: 'Our AR Tech in Action', selector: '.et_pb_section_0 .et_pb_row_2', style: 'light', blocks: ['columns-positioning'], defaultContent: [] },
-    { id: 'section-4', name: 'AR Article Cards', selector: '.et_pb_section_0 .et_pb_row_4', style: 'light', blocks: ['cards-feature'], defaultContent: [] },
-    { id: 'section-5', name: 'Data Corner', selector: '.et_pb_section_1', style: 'light', blocks: ['cards-stats'], defaultContent: [] },
-    { id: 'section-6', name: 'Contact Us', selector: '#sw-contact-us', style: 'light', blocks: [], defaultContent: [] },
-    { id: 'section-7', name: 'Newsletter Sign Up', selector: '.et_pb_section_4', style: 'accent', blocks: ['form'], defaultContent: [] },
+    { id: 'section-4', name: 'AR in Retail', selector: '.et_pb_section_0 .et_pb_row_4', style: 'light', blocks: ['cards-feature'], defaultContent: [] },
+    { id: 'section-5', name: 'AR in Healthcare', selector: '.et_pb_section_0 .et_pb_row_6', style: 'light', blocks: ['cards-feature'], defaultContent: [] },
+    { id: 'section-6', name: 'AR in Sports', selector: '.et_pb_section_0 .et_pb_row_8', style: 'light', blocks: ['cards-feature'], defaultContent: [] },
+    { id: 'section-7', name: 'Data Corner', selector: '.et_pb_section_1', style: 'light', blocks: ['cards-stats'], defaultContent: [] },
+    { id: 'section-8', name: 'Contact Us', selector: '#sw-contact-us', style: 'light', blocks: [], defaultContent: [] },
+    { id: 'section-9', name: 'Newsletter Sign Up', selector: '.et_pb_section_4', style: 'accent', blocks: ['form'], defaultContent: [] },
   ],
 };
 

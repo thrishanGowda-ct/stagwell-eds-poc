@@ -36,8 +36,8 @@
   height: auto;
 }
 
-/* Webcast announcement line */
-.hero-intro p {
+/* Webcast announcement line — homepage only */
+.hero-intro:not(.hero-intro-about, .hero-intro-ar) p {
   margin: 0 0 8px;
   font-family: var(--body-font-family);
   font-size: 15px;
@@ -46,14 +46,13 @@
   color: var(--text-color);
 }
 
-/* Circular play-icon before the webcast line — float left so the webcast
-   text wraps to its right, matching the source layout */
-.hero-intro > div:last-child p:first-child {
+/* Circular play-icon before the webcast line — homepage only */
+.hero-intro:not(.hero-intro-about, .hero-intro-ar) > div:last-child p:first-child {
   float: left;
   margin: 0 16px 8px 0;
 }
 
-.hero-intro > div:last-child p:first-child img {
+.hero-intro:not(.hero-intro-about, .hero-intro-ar) > div:last-child p:first-child img {
   width: 44px;
   height: 44px;
 }
@@ -72,8 +71,8 @@
   color: var(--link-hover-color);
 }
 
-/* "Transforming / Marketing" headline (single h3 with <br>) */
-.hero-intro h3 {
+/* "Transforming / Marketing" headline — homepage only */
+.hero-intro:not(.hero-intro-about, .hero-intro-ar) h3 {
   clear: left;
   margin: 0;
   padding-top: 16px;
@@ -86,7 +85,7 @@
 }
 
 /* Second line "Marketing" rendered in display serif italic to match source */
-.hero-intro h3 .display-line {
+.hero-intro:not(.hero-intro-about, .hero-intro-ar) h3 .display-line {
   display: block;
   font-family: var(--display-font-family);
   font-style: italic;
@@ -94,7 +93,7 @@
 }
 
 @media (width >= 900px) {
-  .hero-intro {
+  .hero-intro:not(.hero-intro-about, .hero-intro-ar) {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -103,25 +102,23 @@
     padding: 130px 90px 30px;
   }
 
-  /* Logo row takes the larger left portion, text row the right */
-  .hero-intro > div:first-child {
+  .hero-intro:not(.hero-intro-about, .hero-intro-ar) > div:first-child {
     flex: 0 1 57%;
   }
 
-  /* vertical divider between logo and headline */
-  .hero-intro > div:last-child {
+  .hero-intro:not(.hero-intro-about, .hero-intro-ar) > div:last-child {
     flex: 0 1 43%;
     border-left: 1px solid rgb(0 51 73 / 20%);
     padding-left: 40px;
   }
 
-  .hero-intro h3 {
+  .hero-intro:not(.hero-intro-about, .hero-intro-ar) h3 {
     font-size: 48px;
     line-height: 43.2px;
     letter-spacing: 0.48px;
   }
 
-  .hero-intro h3 .display-line {
+  .hero-intro:not(.hero-intro-about, .hero-intro-ar) h3 .display-line {
     letter-spacing: -0.48px;
   }
 }
@@ -192,5 +189,41 @@ main > .section:has(.hero-intro-about) {
 
   .hero-intro-about .hero-intro-about-intro {
     margin-top: 4rem;
+  }
+}
+
+/* Augmented Reality hero: delayed fade-up on title + label */
+body.appear .hero-intro-ar .hero-intro-ar-title {
+  animation: hero-intro-ar-in 0.9s ease forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+body.appear .hero-intro-ar .hero-intro-ar-label {
+  animation: hero-intro-ar-in 0.9s ease forwards;
+  animation-delay: 0.85s;
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+@keyframes hero-intro-ar-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.appear .hero-intro-ar .hero-intro-ar-title,
+  body.appear .hero-intro-ar .hero-intro-ar-label {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

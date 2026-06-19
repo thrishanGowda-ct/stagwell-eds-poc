@@ -2,14 +2,14 @@
 
 /* Values extracted from source computed styles (stagwellglobal.com). */
 
-/* Section background: white top → light grey bottom */
-main > .section.cards-feature-container {
+/* Section background: white top → light grey bottom (homepage grid only) */
+main > .section.cards-feature-container:not(.ar-article-section) {
   background-image: linear-gradient(180deg, #fff 65%, #f5f7f6 65%) !important;
 }
 
-/* Wider 170px gutter for this section (overrides the global 90px) */
+/* Wider 170px gutter for homepage positioning only */
 @media (width >= 900px) {
-  main > .section.cards-feature-container > div {
+  main > .section.cards-feature-container:not(.ar-article-section) > div {
     padding: 0 170px;
   }
 }
@@ -56,6 +56,10 @@ main > .section.cards-feature-container {
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* Homepage 3-up grid only — AR article cards use .cards-feature-ar-image */
+.cards-feature:not(.cards-feature-ar-article) .cards-feature-card-image img {
   aspect-ratio: 346 / 200;
   object-fit: cover;
 }
@@ -86,88 +90,44 @@ main > .section.cards-feature-container {
 }
 
 /* -------------------------------------------------------------------------
-   Single-article variant (cards-feature-article)
-   Used on the Augmented Reality page where each block holds ONE card and
-   renders as a horizontal media row (image left, text right). All rules are
-   scoped to .cards-feature-article so the 3-up homepage grid is untouched.
+   Generic single-article variant (non-AR pages)
    ------------------------------------------------------------------------- */
 
-/* stacked articles sit close together (source gap ~23px) */
 .cards-feature.cards-feature-article {
   margin: 0;
+  padding: 0;
 }
 
 .cards-feature.cards-feature-article > ul {
   gap: 0;
 }
 
-/* mobile: image on top, text below */
 .cards-feature.cards-feature-article .cards-feature-card-image {
   margin: 0 0 16px;
 }
 
 .cards-feature.cards-feature-article .cards-feature-card-image img {
-  aspect-ratio: 276 / 225;
+  aspect-ratio: auto;
   object-fit: contain;
-}
-
-/* title uses h4 here; uppercase navy, matching source */
-.cards-feature.cards-feature-article .cards-feature-card-body h4 {
-  margin: 0;
-  padding: 0;
-  font-family: var(--heading-font-family);
-  font-size: var(--heading-font-size-m); /* 24px desktop */
-  font-weight: 500;
-  line-height: 1.2;
-  letter-spacing: 2.88px;
-  text-transform: uppercase;
-  color: var(--text-color);
-}
-
-.cards-feature.cards-feature-article .cards-feature-card-body p {
-  margin: 0;
-  font-family: var(--body-font-family);
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.55;
-  color: var(--text-color);
-}
-
-/* "Read More" call to action: bold gold, letter-spaced, spaced above */
-.cards-feature.cards-feature-article .cards-feature-card-body p.cards-feature-cta {
-  margin-top: 30px;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 1.92px;
-  color: var(--color-accent-gold);
-}
-
-/* CTA may be auto-decorated into a button/link by EDS; keep it gold + bold */
-.cards-feature.cards-feature-article .cards-feature-card-body p.cards-feature-cta a:any-link {
-  color: var(--color-accent-gold);
-  font-weight: 700;
-  text-decoration: none;
+  max-height: 320px;
 }
 
 @media (width >= 900px) {
-  /* horizontal media row: image ~25%, text fills the rest, top aligned */
   .cards-feature.cards-feature-article > ul > li {
     flex-direction: row;
     align-items: flex-start;
     gap: 72px;
+    padding: 1.5rem 0;
   }
 
   .cards-feature.cards-feature-article .cards-feature-card-image {
-    flex: 0 0 19%;
+    flex: 0 0 32%;
     margin: 0;
   }
 
   .cards-feature.cards-feature-article .cards-feature-card-body {
     flex: 1 1 0;
     min-width: 0;
-
-    /* source keeps the text to ~624px with trailing whitespace on the right */
     max-width: 624px;
   }
 }

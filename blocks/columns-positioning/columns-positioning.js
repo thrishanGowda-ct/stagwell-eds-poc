@@ -26,6 +26,39 @@ export default function decorate(block) {
       imageCol.classList.add('columns-positioning-media-image');
     }
 
+    const arHeading = textCol.querySelector('h3');
+    if (arHeading && /ar tech/i.test(arHeading.textContent)) {
+      block.classList.add('columns-positioning-ar');
+      textCol.classList.add('columns-positioning-ar-text');
+      const accent = arHeading.querySelector('strong, em, span');
+      if (accent && /^action/i.test(accent.textContent.trim())) {
+        accent.classList.add('columns-positioning-ar-accent');
+      } else if (/action/i.test(arHeading.textContent)) {
+        arHeading.innerHTML = arHeading.innerHTML.replace(
+          /(<strong>)?Action(\s*)(<\/strong>)?/i,
+          '<span class="columns-positioning-ar-accent">Action$2</span>',
+        );
+      }
+      const quote = textCol.querySelector('blockquote');
+      if (quote) {
+        quote.classList.add('columns-positioning-ar-quote');
+        const quoteParagraph = quote.querySelector('p');
+        if (quoteParagraph) {
+          quoteParagraph.innerHTML = quoteParagraph.innerHTML
+            .replace(/^[\s\u201C\u201D"'‘’]+/, '')
+            .replace(/[\s\u201C\u201D"'‘’]+$/, '');
+        }
+      }
+      const cite = [...textCol.querySelectorAll('p')].find((p) => (
+        !p.querySelector('strong') && /^forbes$/i.test(p.textContent.trim())
+      ));
+      if (cite) {
+        cite.classList.add('columns-positioning-ar-cite');
+        cite.querySelector('em')?.classList.add('columns-positioning-ar-cite-name');
+      }
+      return;
+    }
+
     const headings = [...textCol.querySelectorAll('h1, h2, h3, h4, h5, h6')];
     const lead = headings.find((h) => /^our$/i.test(h.textContent.trim()));
     const accent = headings.find((h) => /^(story|impact)$/i.test(h.textContent.trim()));
